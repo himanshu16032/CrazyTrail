@@ -10,7 +10,8 @@ const stats = [
   { icon: Heart, label: 'Engagement', value: 500, suffix: '%', color: 'text-accent-pink' },
 ];
 
-// ──── ADJUST THESE TO CONTROL ILLUSTRATION APPEARANCE ────
+// Desktop values below stay exactly as before.
+// Use the *Mobile* fields to control how the images appear below `sm`.
 const illustrationConfig = {
   girlOpacity: 0.18,   // 0 = invisible, 1 = fully visible
   boyOpacity: 0.30,
@@ -18,6 +19,12 @@ const illustrationConfig = {
   boyPosition: 'right-130 bottom-100',
   girlSize: 'w-[320px] sm:w-[400px] lg:w-[460px]',
   boySize: 'w-[300px] sm:w-[370px] lg:w-[420px]',
+  girlMobileOpacity: 0.16,
+  boyMobileOpacity: 0.15,
+  girlMobilePosition: 'left-[-28px] bottom-3',
+  boyMobilePosition: 'right-[-24px] top-20',
+  girlMobileSize: 'w-[190px]',
+  boyMobileSize: 'w-[185px]',
 };
 
 const floatingEmojis = [
@@ -53,14 +60,28 @@ export default function Hero() {
         src="/images/chatting-girl.png"
         alt=""
         aria-hidden="true"
-        className={`pointer-events-none absolute ${illustrationConfig.girlPosition} ${illustrationConfig.girlSize} h-auto object-contain select-none`}
+        className={`pointer-events-none absolute sm:hidden ${illustrationConfig.girlMobilePosition} ${illustrationConfig.girlMobileSize} h-auto object-contain select-none`}
+        style={{ opacity: illustrationConfig.girlMobileOpacity }}
+      />
+      <img
+        src="/images/chatting-boy.png"
+        alt=""
+        aria-hidden="true"
+        className={`pointer-events-none absolute sm:hidden ${illustrationConfig.boyMobilePosition} ${illustrationConfig.boyMobileSize} h-auto object-contain select-none`}
+        style={{ opacity: illustrationConfig.boyMobileOpacity }}
+      />
+      <img
+        src="/images/chatting-girl.png"
+        alt=""
+        aria-hidden="true"
+        className={`pointer-events-none absolute hidden sm:block ${illustrationConfig.girlPosition} ${illustrationConfig.girlSize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.girlOpacity }}
       />
       <img
         src="/images/chatting-boy.png"
         alt=""
         aria-hidden="true"
-        className={`pointer-events-none absolute ${illustrationConfig.boyPosition} ${illustrationConfig.boySize} h-auto object-contain select-none`}
+        className={`pointer-events-none absolute hidden sm:block ${illustrationConfig.boyPosition} ${illustrationConfig.boySize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.boyOpacity }}
       />
 
@@ -94,7 +115,7 @@ export default function Hero() {
               <TrendingUp className="w-4 h-4" />
               Trend Discovery for Creators
             </motion.div>
-            <motion.h1 variants={fadeUp} custom={1} className="font-heading font-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
+            <motion.h1 variants={fadeUp} custom={1} className="font-heading font-900 text-5xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
               <span className="text-dark drop-shadow-[0_2px_4px_rgba(45,43,85,0.15)]">Stop Guessing.</span>{' '}
               <span className="relative inline-block">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-pink to-accent-orange drop-shadow-lg">
