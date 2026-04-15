@@ -28,21 +28,22 @@ const illustrationConfig = {
 };
 
 const floatingEmojis = [
-  { emoji: '❤️',  x: '3%',  y: '8%',   delay: 0,    dur: 5.2,  size: 'text-4xl sm:text-5xl' },
-  { emoji: '💬',  x: '92%', y: '14%',  delay: 1.8,  dur: 6.1,  size: 'text-4xl sm:text-5xl' },
-  { emoji: '🔥',  x: '78%', y: '78%',  delay: 0.4,  dur: 4.7,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '📩',  x: '6%',  y: '68%',  delay: 2.3,  dur: 5.8,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '💡',  x: '18%', y: '38%',  delay: 3.1,  dur: 5.4,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '📈',  x: '88%', y: '50%',  delay: 1.1,  dur: 6.3,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '✨',  x: '38%', y: '90%',  delay: 0.6,  dur: 4.9,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '💜',  x: '68%', y: '6%',   delay: 2.7,  dur: 5.6,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '🗨️',  x: '25%', y: '82%',  delay: 1.5,  dur: 6.8,  size: 'text-4xl sm:text-5xl' },
-  { emoji: '🎯',  x: '82%', y: '88%',  delay: 3.5,  dur: 5.1,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '👀',  x: '48%', y: '45%',  delay: 0.2,  dur: 7.3,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '📣',  x: '12%', y: '18%',  delay: 2.0,  dur: 5.9,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '💌',  x: '72%', y: '35%',  delay: 3.8,  dur: 6.5,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '👍',  x: '35%', y: '58%',  delay: 1.3,  dur: 4.6,  size: 'text-3xl sm:text-4xl' },
-  { emoji: '🔔',  x: '95%', y: '30%',  delay: 0.7,  dur: 5.3,  size: 'text-3xl sm:text-4xl' },
+  // Set `showOnMobile` to false to hide an emoji on phones while keeping it on desktop.
+  { emoji: '❤️',  x: '3%',  y: '9%',   delay: 0,    dur: 2.2,  size: 'text-4xl sm:text-5xl', showOnMobile: true },
+  { emoji: '💬',  x: '92%', y: '14%',  delay: 1.8,  dur: 6.1,  size: 'text-4xl sm:text-5xl', showOnMobile: true },
+  { emoji: '🔥',  x: '78%', y: '78%',  delay: 0.4,  dur: 4.7,  size: 'text-3xl sm:text-4xl', showOnMobile: true },
+  { emoji: '📩',  x: '6%',  y: '68%',  delay: 2.3,  dur: 5.8,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '💡',  x: '18%', y: '38%',  delay: 3.1,  dur: 5.4,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '📈',  x: '88%', y: '50%',  delay: 1.1,  dur: 6.3,  size: 'text-3xl sm:text-4xl', showOnMobile: true },
+  { emoji: '✨',  x: '38%', y: '90%',  delay: 0.6,  dur: 4.9,  size: 'text-3xl sm:text-4xl', showOnMobile: true },
+  { emoji: '💜',  x: '68%', y: '6%',   delay: 2.7,  dur: 5.6,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '🗨️',  x: '25%', y: '82%',  delay: 1.5,  dur: 6.8,  size: 'text-4xl sm:text-5xl', showOnMobile: true },
+  { emoji: '🎯',  x: '82%', y: '88%',  delay: 3.5,  dur: 5.1,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '👀',  x: '48%', y: '45%',  delay: 0.2,  dur: 7.3,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '📣',  x: '12%', y: '18%',  delay: 2.0,  dur: 5.9,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '💌',  x: '72%', y: '35%',  delay: 3.8,  dur: 6.5,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
+  { emoji: '👍',  x: '35%', y: '58%',  delay: 1.3,  dur: 4.6,  size: 'text-3xl sm:text-4xl', showOnMobile: true },
+  { emoji: '🔔',  x: '95%', y: '30%',  delay: 0.7,  dur: 5.3,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
 ];
 
 const fadeUp = {
@@ -89,7 +90,7 @@ export default function Hero() {
       {floatingEmojis.map((item, i) => (
         <motion.span
           key={i}
-          className={`pointer-events-none absolute select-none ${item.size}`}
+          className={`pointer-events-none absolute select-none ${item.size} ${item.showOnMobile ? 'block' : 'hidden sm:block'}`}
           style={{ left: item.x, top: item.y }}
           initial={{ opacity: 1, scale: 0.02 }}
           animate={{
