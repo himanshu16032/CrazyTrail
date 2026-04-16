@@ -41,6 +41,11 @@ export default function Footer() {
           <p className="text-white/40 text-sm">
             &copy; {new Date().getFullYear()} CrazyTrail. All rights reserved.
           </p>
+          <p className="text-white/20 text-xs mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <a href="https://www.youtube.com/creators/" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition-colors">YouTube Creators</a>
+            <a href="https://business.instagram.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition-colors">Instagram for Business</a>
+            <a href="https://trends.google.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition-colors">Google Trends</a>
+          </p>
         </div>
       </div>
     </footer>

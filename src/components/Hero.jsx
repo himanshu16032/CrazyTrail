@@ -59,28 +59,26 @@ export default function Hero() {
       {/* ── Background illustrations ── */}
       <img
         src="/images/chatting-girl.png"
-        alt=""
-        aria-hidden="true"
+        alt="Content creator discovering trending topics and viral hashtags on CrazyTrail"
         className={`pointer-events-none absolute sm:hidden ${illustrationConfig.girlMobilePosition} ${illustrationConfig.girlMobileSize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.girlMobileOpacity }}
       />
       <img
         src="/images/chatting-boy.png"
-        alt=""
-        aria-hidden="true"
+        alt="YouTube creator using AI trend prediction tool to find content ideas"
         className={`pointer-events-none absolute sm:hidden ${illustrationConfig.boyMobilePosition} ${illustrationConfig.boyMobileSize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.boyMobileOpacity }}
       />
       <img
         src="/images/chatting-girl.png"
-        alt=""
+        alt="Content creator discovering trending topics and viral hashtags on CrazyTrail"
         aria-hidden="true"
         className={`pointer-events-none absolute hidden sm:block ${illustrationConfig.girlPosition} ${illustrationConfig.girlSize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.girlOpacity }}
       />
       <img
         src="/images/chatting-boy.png"
-        alt=""
+        alt="YouTube creator using AI trend prediction tool to find content ideas"
         aria-hidden="true"
         className={`pointer-events-none absolute hidden sm:block ${illustrationConfig.boyPosition} ${illustrationConfig.boySize} h-auto object-contain select-none`}
         style={{ opacity: illustrationConfig.boyOpacity }}

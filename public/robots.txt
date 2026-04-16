@@ -1,0 +1,39 @@
+# CrazyTrail — AI-Powered Trend Discovery for Content Creators
+# https://www.crazytrail.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# GPTBot (OpenAI)
+User-agent: GPTBot
+Allow: /
+
+# Google Extended (Gemini)
+User-agent: Google-Extended
+Allow: /
+
+# CCBot (Common Crawl — used by many AI models)
+User-agent: CCBot
+Allow: /
+
+# Anthropic
+User-agent: anthropic-ai
+Allow: /
+
+# Sitemap
+Sitemap: https://www.crazytrail.com/sitemap.xml
+
+# Host
+Host: https://www.crazytrail.com
