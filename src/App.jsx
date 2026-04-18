@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhatWeProvide from './components/WhatWeProvide';
@@ -18,6 +19,7 @@ export default function App() {
       <EngagementShowcase />
       <SubmitForm />
       <Footer />
+      <Analytics />
     </>
   );
 }
