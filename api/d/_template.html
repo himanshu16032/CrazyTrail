@@ -146,25 +146,43 @@
 
       <!-- ============ DETAIL VIEWS (trending / rising / seasonal share the same shell) ============ -->
       <section class="view" id="view-trending">
-        <div class="panel pie-panel pie-panel-top">
-          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across trending keywords</span></div>
-          <div class="chart-shell"><canvas id="pie-trending"></canvas></div>
+        <div class="grid-65-35">
+          <div class="detail-list-panel">
+            <div class="panel-header"><h3>Trending Keywords</h3><span class="meta">Click any row to jump to its news</span></div>
+            <div class="topic-list" id="list-trending"></div>
+          </div>
+          <div class="panel pie-panel">
+            <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across trending</span></div>
+            <div class="chart-shell tall"><canvas id="pie-trending"></canvas></div>
+          </div>
         </div>
         <div class="kw-cards" id="cards-trending"></div>
       </section>
 
       <section class="view" id="view-rising">
-        <div class="panel pie-panel pie-panel-top">
-          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across rising keywords</span></div>
-          <div class="chart-shell"><canvas id="pie-rising"></canvas></div>
+        <div class="grid-65-35">
+          <div class="detail-list-panel">
+            <div class="panel-header"><h3>Rising Keywords</h3><span class="meta">Click any row to jump to its news</span></div>
+            <div class="topic-list" id="list-rising"></div>
+          </div>
+          <div class="panel pie-panel">
+            <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across rising</span></div>
+            <div class="chart-shell tall"><canvas id="pie-rising"></canvas></div>
+          </div>
         </div>
         <div class="kw-cards" id="cards-rising"></div>
       </section>
 
       <section class="view" id="view-seasonal">
-        <div class="panel pie-panel pie-panel-top">
-          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across seasonal keywords</span></div>
-          <div class="chart-shell"><canvas id="pie-seasonal"></canvas></div>
+        <div class="grid-65-35">
+          <div class="detail-list-panel">
+            <div class="panel-header"><h3>Seasonal Keywords</h3><span class="meta">Click any row to jump to its news</span></div>
+            <div class="topic-list" id="list-seasonal"></div>
+          </div>
+          <div class="panel pie-panel">
+            <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across seasonal</span></div>
+            <div class="chart-shell tall"><canvas id="pie-seasonal"></canvas></div>
+          </div>
         </div>
         <div class="kw-cards" id="cards-seasonal"></div>
       </section>
@@ -434,6 +452,7 @@
         const card = document.createElement('article');
         card.className = 'kw-card';
         card.dataset.idx = idx;
+        card.id = `card-${category}-${idx}`;
 
         card.innerHTML = `
           <div class="kw-head">
@@ -529,8 +548,40 @@
       });
     }
 
+    /* ---------- Detail-tab left list (rows scroll to matching card below) ---------- */
+    function renderDetailList(category) {
+      const target = document.getElementById('list-' + category);
+      if (!target) return;
+      const topics = DATA[category];
+      target.innerHTML = '';
+      topics.forEach((t, idx) => {
+        const isPos = t.change_pct >= 0;
+        const row = document.createElement('div');
+        row.className = 'topic-row detail';
+        row.innerHTML = `
+          <div>
+            <div class="name">${t.keyword}</div>
+            <div class="tags">${t.tags.join(' · ')}</div>
+          </div>
+          <div></div>
+          <div class="row-actions">
+            <div class="vol">${fmt(t.current_volume)}</div>
+            <div class="delta ${isPos ? 'delta-pos' : 'delta-neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</div>
+          </div>`;
+        row.addEventListener('click', () => {
+          const card = document.getElementById(`card-${category}-${idx}`);
+          if (!card) return;
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          card.classList.add('flash');
+          setTimeout(() => card.classList.remove('flash'), 1400);
+        });
+        target.appendChild(row);
+      });
+    }
+
     function renderCategory(category) {
       buildCategoryPie(category);
+      renderDetailList(category);
       renderKeywordCards(category);
     }
     ['trending', 'rising', 'seasonal'].forEach(renderCategory);
