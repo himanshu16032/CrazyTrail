@@ -323,8 +323,33 @@ button { font-family: inherit; }
   gap: 18px;
   margin-bottom: 18px;
 }
+/* Detail-tab top row: keyword list (65%) + pie chart (35%) */
+.grid-65-35 {
+  display: grid;
+  grid-template-columns: minmax(0, 13fr) minmax(0, 7fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
 .pie-panel { display: flex; flex-direction: column; }
 .pie-panel .chart-shell { flex: 1; min-height: 260px; }
+
+/* Detail-tab left panel: scrollable keyword list, capped height to align with pie */
+.detail-list-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 14px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.detail-list-panel .topic-list {
+  overflow-y: auto;
+  max-height: 360px;
+  padding-right: 4px;
+  gap: 6px;
+}
 
 .panel {
   background: var(--surface);
@@ -518,6 +543,15 @@ button { font-family: inherit; }
   border-color: var(--border-strong);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+/* Brief glow when scrolled to from a list-row click */
+.kw-card.flash {
+  animation: kwFlash 1.4s ease;
+}
+@keyframes kwFlash {
+  0%   { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.55); border-color: var(--primary); }
+  60%  { box-shadow: 0 0 0 12px rgba(108, 99, 255, 0.00); border-color: var(--primary); }
+  100% { box-shadow: var(--shadow-sm); border-color: var(--border); }
 }
 
 .kw-head {
@@ -782,7 +816,9 @@ button { font-family: inherit; }
   .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .overview-grid,
   .grid-40-60,
-  .grid-60-40 { grid-template-columns: 1fr; }
+  .grid-60-40,
+  .grid-65-35 { grid-template-columns: 1fr; }
+  .detail-list-panel .topic-list { max-height: none; }
 }
 
 /* =============================================================
@@ -821,7 +857,8 @@ button { font-family: inherit; }
   .panel { padding: 16px 14px; border-radius: 14px; }
   .panel-header h3 { font-size: 14.5px; }
   .panel-header .meta { font-size: 11px; }
-  .grid-40-60, .grid-60-40, .overview-grid { gap: 14px; margin-bottom: 14px; }
+  .grid-40-60, .grid-60-40, .grid-65-35, .overview-grid { gap: 14px; margin-bottom: 14px; }
+  .detail-list-panel { padding: 14px 12px; }
 
   /* Charts shorter on mobile so user sees more without scrolling forever */
   .chart-shell { height: 200px; }
