@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhatWeProvide from './components/WhatWeProvide';
@@ -20,6 +21,7 @@ export default function App() {
       <SubmitForm />
       <Footer />
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
