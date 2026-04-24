@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>__BRAND_NAME__ — Trends Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,__FAVICON_SVG__" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <style>__INLINE_CSS__</style>
+</head>
+<body>
+
+  <!-- Reusable rocket icon (Lucide) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.5 0 3-2 3-3.5 0-1.5-1-2.5-1-4 0-1.5.5-3 .5-3S15 7 15 9c0 0 2-2 2-5 0 0 4 4 4 8a8 8 0 0 1-16 0 6 6 0 0 1 4-5.66"/>
+    </symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+    </symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/>
+      <line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>
+    </symbol>
+    <symbol id="i-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+      <path d="M18 14h-8M15 18h-5M10 6h8M10 10h8"/>
+    </symbol>
+  </svg>
+
+  <div class="app">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo"><svg><use href="#i-rocket"/></svg></div>
+        <div class="brand-name">Crazy<span>Trail</span></div>
+      </div>
+
+      <div class="nav-label">Discover</div>
+      <nav class="nav" id="nav">
+        <button class="nav-item active" data-view="overview">
+          <span class="ico"><svg><use href="#i-grid"/></svg></span> Overview
+        </button>
+        <button class="nav-item" data-view="trending">
+          <span class="ico"><svg><use href="#i-flame"/></svg></span> Trending Now
+          <span class="count" id="count-trending">0</span>
+        </button>
+        <button class="nav-item" data-view="rising">
+          <span class="ico"><svg><use href="#i-trending-up"/></svg></span> Rising
+          <span class="count" id="count-rising">0</span>
+        </button>
+        <button class="nav-item" data-view="seasonal">
+          <span class="ico"><svg><use href="#i-snow"/></svg></span> Seasonal
+          <span class="count" id="count-seasonal">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        Built for creators · CrazyTrail
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+      <header class="topbar">
+        <div class="greet" id="greet"></div>
+        <h1 id="view-title"></h1>
+        <div class="subtitle" id="view-subtitle"></div>
+      </header>
+
+      <!-- ============ OVERVIEW VIEW ============ -->
+      <section class="view active" id="view-overview">
+
+        <div class="kpis" id="kpis"></div>
+
+        <!-- Row: Rising Fast (40%) | Trend Activity (60%) -->
+        <div class="grid-40-60">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Rising Fast</h3>
+              <span class="link" data-jump="rising">View all →</span>
+            </div>
+            <div class="topic-list" id="overview-rising"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Trend Activity</h3>
+              <span class="meta">Daily volume · trending keywords · 14d</span>
+            </div>
+            <div class="chart-shell tall"><canvas id="chart-activity-line"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Row: Currently Trending (60%) | Latest Volume Share pie (40%) -->
+        <div class="grid-60-40">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Currently Trending</h3>
+              <span class="link" data-jump="trending">View all →</span>
+            </div>
+            <div class="topic-list" id="overview-trending"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Latest Volume Share</h3>
+              <span class="meta">Trending keywords</span>
+            </div>
+            <div class="chart-shell tall"><canvas id="chart-activity-pie"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Seasonal Peaks (full width) -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Seasonal Peaks</h3>
+            <span class="link" data-jump="seasonal">View all →</span>
+          </div>
+          <div class="topic-list" id="overview-seasonal"></div>
+        </div>
+      </section>
+
+      <!-- ============ DETAIL VIEWS (trending / rising / seasonal share the same shell) ============ -->
+      <section class="view" id="view-trending">
+        <div class="panel pie-panel pie-panel-top">
+          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across trending keywords</span></div>
+          <div class="chart-shell"><canvas id="pie-trending"></canvas></div>
+        </div>
+        <div class="kw-cards" id="cards-trending"></div>
+      </section>
+
+      <section class="view" id="view-rising">
+        <div class="panel pie-panel pie-panel-top">
+          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across rising keywords</span></div>
+          <div class="chart-shell"><canvas id="pie-rising"></canvas></div>
+        </div>
+        <div class="kw-cards" id="cards-rising"></div>
+      </section>
+
+      <section class="view" id="view-seasonal">
+        <div class="panel pie-panel pie-panel-top">
+          <div class="panel-header"><h3>Volume Share</h3><span class="meta">Across seasonal keywords</span></div>
+          <div class="chart-shell"><canvas id="pie-seasonal"></canvas></div>
+        </div>
+        <div class="kw-cards" id="cards-seasonal"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Mobile bottom tab bar (hidden on desktop via CSS) -->
+  <nav class="bottom-nav" id="bottom-nav" aria-label="Primary">
+    <button class="bnav-item active" data-view="overview">
+      <span class="ico"><svg><use href="#i-grid"/></svg></span><span>Home</span>
+    </button>
+    <button class="bnav-item" data-view="trending">
+      <span class="ico"><svg><use href="#i-flame"/></svg></span><span>Trending</span>
+    </button>
+    <button class="bnav-item" data-view="rising">
+      <span class="ico"><svg><use href="#i-trending-up"/></svg></span><span>Rising</span>
+    </button>
+    <button class="bnav-item" data-view="seasonal">
+      <span class="ico"><svg><use href="#i-snow"/></svg></span><span>Seasonal</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script id="dashboard-data" type="application/json">__DATA_JSON__</script>
+  <script>
+  (function () {
+    const DATA = JSON.parse(document.getElementById('dashboard-data').textContent);
+
+    /* ---------- helpers ---------- */
+    const fmt = n => {
+      if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
+      if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
+      return String(n);
+    };
+    const ROOT_STYLE = getComputedStyle(document.documentElement);
+    const cssVar = name => ROOT_STYLE.getPropertyValue(name).trim();
+    const PALETTE = ['--primary', '--pink', '--orange', '--green', '--yellow'].map(cssVar);
+
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = cssVar('--ink-soft');
+    Chart.defaults.borderColor = cssVar('--border');
+    // Register data labels plugin so numbers show without hovering.
+    if (window.ChartDataLabels) Chart.register(ChartDataLabels);
+
+    /* Cheap viewport check used by chart configs to adapt for mobile. */
+    const isMobile = () => window.innerWidth <= 900;
+
+    /* ---------- vertical gradient maker for line area fills ---------- */
+    function lineGradient(ctx, area, color) {
+      const g = ctx.createLinearGradient(0, area.top, 0, area.bottom);
+      g.addColorStop(0, color + 'AA');
+      g.addColorStop(0.55, color + '33');
+      g.addColorStop(1, color + '00');
+      return g;
+    }
+
+    /* ---------- toast ---------- */
+    let toastTimer;
+    const toastEl = document.getElementById('toast');
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1500);
+    }
+
+    function copyToClipboard(text, btn, label) {
+      const done = () => {
+        if (btn) { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 1100); }
+        toast(label || 'Copied!');
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallback());
+      } else { fallback(); }
+      function fallback() {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (_) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    /* ---------- header (mood-based tagline) ---------- */
+    const TL = DATA.tagline;
+    document.getElementById('greet').textContent = `Hi ${DATA.user.name}`;
+    document.getElementById('view-title').textContent = TL.title;
+    document.getElementById('view-subtitle').textContent = TL.subtitle;
+
+    /* ---------- KPIs (smaller, clickable, route to view) ---------- */
+    const kpisEl = document.getElementById('kpis');
+    DATA.kpis.forEach(k => {
+      const el = document.createElement('div');
+      el.className = 'kpi tone-' + (k.tone || 'primary');
+      el.innerHTML = `
+        <div class="stripe"></div>
+        <div class="meta">
+          <div class="label">${k.label}</div>
+          <div class="value">${k.value}</div>
+          <div class="hint">${k.hint || ''}</div>
+        </div>
+        <div class="arrow">›</div>`;
+      el.addEventListener('click', () => switchView(k.view || 'overview'));
+      kpisEl.appendChild(el);
+    });
+
+    /* ---------- sidebar counts ---------- */
+    document.getElementById('count-trending').textContent = DATA.trending.length;
+    document.getElementById('count-rising').textContent = DATA.rising.length;
+    document.getElementById('count-seasonal').textContent = DATA.seasonal.length;
+
+    /* ---------- overview compact lists (no copy/news buttons here, click jumps) ---------- */
+    function renderOverviewList(targetId, topics, jumpView) {
+      const target = document.getElementById(targetId);
+      target.innerHTML = '';
+      topics.forEach(t => {
+        const isPos = t.change_pct >= 0;
+        const row = document.createElement('div');
+        row.className = 'topic-row';
+        row.innerHTML = `
+          <div>
+            <div class="name">${t.keyword}</div>
+            <div class="tags">${t.tags.join(' · ')}</div>
+          </div>
+          <div></div>
+          <div class="row-actions">
+            <div class="vol">${fmt(t.current_volume)}</div>
+            <div class="delta ${isPos ? 'delta-pos' : 'delta-neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</div>
+          </div>`;
+        row.addEventListener('click', () => switchView(jumpView));
+        target.appendChild(row);
+      });
+    }
+    renderOverviewList('overview-trending', DATA.trending, 'trending');
+    renderOverviewList('overview-rising', DATA.rising, 'rising');
+    renderOverviewList('overview-seasonal', DATA.seasonal, 'seasonal');
+
+    /* ---------- Trend Activity LINE (multi-line, hero chart) ---------- */
+    (function buildActivityLine() {
+      const labels = DATA.trending[0].series_labels;
+      const datasets = DATA.trending.map((t, i) => {
+        const color = PALETTE[i % PALETTE.length];
+        return {
+          label: t.keyword,
+          data: t.series,
+          borderColor: color,
+          backgroundColor: ctx => {
+            const { chart } = ctx;
+            const { ctx: c, chartArea } = chart;
+            if (!chartArea) return color + '11';
+            return lineGradient(c, chartArea, color);
+          },
+          fill: true,
+          tension: 0.42,
+          borderWidth: 2.6,
+          pointRadius: 0,
+          pointHoverRadius: 6,
+          pointHoverBorderWidth: 2,
+          pointHoverBorderColor: '#fff',
+          pointHoverBackgroundColor: color,
+        };
+      });
+
+      new Chart(document.getElementById('chart-activity-line'), {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'nearest', intersect: false },
+          layout: { padding: { right: isMobile() ? 8 : 56, top: 16 } },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, padding: isMobile() ? 10 : 16, font: { size: isMobile() ? 10.5 : 12, weight: '600' } },
+            },
+            tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmt(c.parsed.y)}` } },
+            datalabels: {
+              // Show last-point value only on desktop; too crowded on mobile.
+              display: ctx => !isMobile() && ctx.dataIndex === ctx.dataset.data.length - 1,
+              align: 'right',
+              anchor: 'end',
+              offset: 6,
+              formatter: v => fmt(v),
+              color: ctx => ctx.dataset.borderColor,
+              backgroundColor: 'rgba(255,255,255,0.92)',
+              borderRadius: 6,
+              padding: { top: 3, bottom: 3, left: 7, right: 7 },
+              font: { weight: '800', size: 11 },
+            },
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+            y: {
+              grid: { color: cssVar('--border'), drawTicks: false },
+              border: { display: false },
+              ticks: { callback: v => fmt(v), font: { size: 11 }, padding: 6 },
+            },
+          },
+        },
+      });
+    })();
+
+    /* ---------- Latest Volume Share (pie/doughnut with labels) ---------- */
+    (function buildActivityPie() {
+      const t = DATA.trending;
+      new Chart(document.getElementById('chart-activity-pie'), {
+        type: 'doughnut',
+        data: {
+          labels: t.map(x => x.keyword),
+          datasets: [{
+            data: t.map(x => x.current_volume),
+            backgroundColor: t.map((_, i) => PALETTE[i % PALETTE.length]),
+            borderColor: cssVar('--surface'),
+            borderWidth: 4,
+            hoverOffset: 12,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '52%',
+          layout: { padding: 8 },
+          plugins: {
+            legend: {
+              position: isMobile() ? 'bottom' : 'right',
+              labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, padding: 12, font: { size: 11.5, weight: '600' } },
+            },
+            tooltip: { callbacks: { label: c => `${c.label}: ${fmt(c.parsed)}` } },
+            datalabels: {
+              formatter: v => fmt(v),
+              color: '#fff',
+              font: { weight: '800', size: 12, family: "'Nunito', sans-serif" },
+              textShadowColor: 'rgba(0,0,0,0.35)',
+              textShadowBlur: 4,
+              display: ctx => {
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                return ctx.dataset.data[ctx.dataIndex] / total > 0.05;
+              },
+            },
+          },
+        },
+      });
+    })();
+
+    /* ---------- Detail view rendering ---------- */
+    const CATEGORY_ACCENT = {
+      trending: cssVar('--primary'),
+      rising:   cssVar('--orange'),
+      seasonal: cssVar('--green'),
+    };
+
+    /** Render every keyword in this category as a self-contained card,
+     *  2 per row, each containing the topic header + a "Highlights" box
+     *  with the related news inside it. */
+    function renderKeywordCards(category) {
+      const target = document.getElementById('cards-' + category);
+      if (!target) return;
+      const topics = DATA[category];
+      target.innerHTML = '';
+
+      topics.forEach((t, idx) => {
+        const isPos = t.change_pct >= 0;
+        const articles = t.articles || [];
+        const card = document.createElement('article');
+        card.className = 'kw-card';
+        card.dataset.idx = idx;
+
+        card.innerHTML = `
+          <div class="kw-head">
+            <div class="kw-name-line">
+              <button class="copy-mini" data-act="copy-name" title="Copy topic"><svg><use href="#i-copy"/></svg></button>
+              <h3 class="kw-name">${t.keyword}</h3>
+            </div>
+            <div class="kw-stats">
+              <span class="kw-vol">${fmt(t.current_volume)}</span>
+              <span class="delta-pill ${isPos ? '' : 'neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</span>
+            </div>
+          </div>
+
+          <div class="kw-meta">
+            <span class="kw-window">${t.window_label}</span>
+            <span class="tags-inline">
+              <button class="copy-mini" data-act="copy-tags" title="Copy hashtags"><svg><use href="#i-copy"/></svg></button>
+              ${t.tags.map(x => `<span class="tag">${x}</span>`).join('')}
+            </span>
+          </div>
+
+          <div class="highlights-box">
+            <div class="highlights-label">
+              <svg><use href="#i-news"/></svg>
+              Highlights
+              <span class="hl-count">${articles.length}</span>
+            </div>
+            ${
+              articles.length
+                ? `<ul class="news-list">${articles.map(a => `
+                    <li><a href="${a.link}" target="_blank" rel="noopener noreferrer">
+                      ${a.title}${a.source ? `<span class="src">${a.source}</span>` : ''}
+                    </a></li>`).join('')}</ul>`
+                : `<div class="news-empty">No live news fetched (offline or no results).</div>`
+            }
+          </div>
+        `;
+
+        card.querySelector('[data-act="copy-name"]').addEventListener('click', e => {
+          e.stopPropagation();
+          copyToClipboard(t.keyword, e.currentTarget, 'Topic copied');
+        });
+        card.querySelector('[data-act="copy-tags"]').addEventListener('click', e => {
+          e.stopPropagation();
+          copyToClipboard(t.tags.join(' '), e.currentTarget, 'Hashtags copied');
+        });
+
+        target.appendChild(card);
+      });
+    }
+
+    /* ---------- Per-category PIE (one for each detail tab) ---------- */
+    function buildCategoryPie(category) {
+      const ctxEl = document.getElementById('pie-' + category);
+      if (!ctxEl) return;
+      const items = DATA[category];
+      new Chart(ctxEl, {
+        type: 'doughnut',
+        data: {
+          labels: items.map(x => x.keyword),
+          datasets: [{
+            data: items.map(x => x.current_volume),
+            backgroundColor: items.map((_, i) => PALETTE[i % PALETTE.length]),
+            borderColor: cssVar('--surface'),
+            borderWidth: 4,
+            hoverOffset: 12,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '52%',
+          layout: { padding: 8 },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, padding: 12, font: { size: 11.5, weight: '600' } },
+            },
+            tooltip: { callbacks: { label: c => `${c.label}: ${fmt(c.parsed)}` } },
+            datalabels: {
+              formatter: v => fmt(v),
+              color: '#fff',
+              font: { weight: '800', size: 11, family: "'Nunito', sans-serif" },
+              textShadowColor: 'rgba(0,0,0,0.35)',
+              textShadowBlur: 4,
+              display: ctx => {
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                return ctx.dataset.data[ctx.dataIndex] / total > 0.05;
+              },
+            },
+          },
+        },
+      });
+    }
+
+    function renderCategory(category) {
+      buildCategoryPie(category);
+      renderKeywordCards(category);
+    }
+    ['trending', 'rising', 'seasonal'].forEach(renderCategory);
+
+    /* ---------- sidebar nav ---------- */
+    function viewHeader(view) {
+      const moodTitle = TL.title;
+      const moodSub = TL.subtitle;
+      const map = {
+        overview: [moodTitle, moodSub],
+        trending: ['Currently Trending', 'Keywords gaining attention right now — pounce while they\'re still climbing.'],
+        rising:   ['Rising Keywords', 'Smaller now, climbing fast. Get in before the crowd.'],
+        seasonal: ['Seasonal Keywords', 'Recurring peaks — start filming before the wave hits.'],
+      };
+      return map[view] || map.overview;
+    }
+    function switchView(view) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + view).classList.add('active');
+      document.querySelectorAll('.nav-item, .bnav-item').forEach(n => n.classList.toggle('active', n.dataset.view === view));
+      const [title, sub] = viewHeader(view);
+      document.getElementById('view-title').textContent = title;
+      document.getElementById('view-subtitle').textContent = sub;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.nav-item[data-view], .bnav-item[data-view]').forEach(b => {
+      b.addEventListener('click', () => { switchView(b.dataset.view); history.replaceState(null, '', '#' + b.dataset.view); });
+    });
+    document.querySelectorAll('[data-jump]').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); switchView(a.dataset.jump); history.replaceState(null, '', '#' + a.dataset.jump); });
+    });
+    // Deep-link support: #trending / #rising / #seasonal / #overview
+    const __initView = (location.hash || '').replace('#', '');
+    if (['overview', 'trending', 'rising', 'seasonal'].includes(__initView)) switchView(__initView);
+
+  })();
+  </script>
+</body>
+</html>

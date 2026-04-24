@@ -1,8 +1,14 @@
 {
   "rewrites": [
+    { "source": "/d/:id", "destination": "/api/d/:id" },
     {
-      "source": "/((?!favicon\\.svg|images/.*|sitemap\\.xml|robots\\.txt).*)",
+      "source": "/((?!api/.*|d/.*|favicon\\.svg|images/.*|sitemap\\.xml|robots\\.txt).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/d/[id].js": {
+      "includeFiles": "api/d/_*.{html,css}"
+    }
+  }
 }
