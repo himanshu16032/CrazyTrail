@@ -175,6 +175,49 @@ button { font-family: inherit; }
   color: #fff;
 }
 
+/* Blog/external links shown below Discover. Smaller, secondary weight so
+ * they read as "further reading" not navigation. */
+.ext-nav { display: flex; flex-direction: column; gap: 4px; }
+.ext-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1px solid transparent;
+  transition: transform 160ms ease, background 160ms ease,
+              color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.ext-nav-item .ico {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-mute);
+  flex-shrink: 0;
+}
+.ext-nav-item .ico svg { width: 16px; height: 16px; }
+.ext-nav-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ext-nav-item:hover {
+  background: #fff;
+  border-color: var(--border);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(2px);
+}
+.ext-nav-item:hover .ico { color: var(--primary); }
+
 .sidebar-footer {
   margin-top: auto;
   border-top: 1px solid var(--border);
@@ -191,6 +234,14 @@ button { font-family: inherit; }
 }
 
 .topbar { margin-bottom: 26px; }
+.topbar-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.topbar-text { min-width: 0; flex: 1 1 480px; }
 .greet {
   font-size: 13px;
   color: var(--primary);
@@ -210,6 +261,57 @@ button { font-family: inherit; }
   font-size: 14px;
   margin-top: 6px;
   max-width: 720px;
+}
+
+/* Icon-only Gemini sparkle button — pulses continuously. Click → home. */
+@keyframes btn-gemini-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 22px rgba(108, 99, 255, 0.32);
+  }
+  50% {
+    transform: scale(1.10);
+    box-shadow: 0 14px 34px rgba(108, 99, 255, 0.55);
+  }
+}
+.btn-generate-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  flex: 0 0 auto;
+  animation: btn-gemini-pulse 2.2s ease-in-out infinite;
+  transition: background 0.2s ease, filter 0.2s ease;
+  will-change: transform, box-shadow;
+}
+.btn-generate-more svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+}
+.btn-generate-more:hover {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  filter: brightness(1.05);
+}
+.btn-generate-more:focus-visible {
+  outline: 3px solid var(--primary-soft);
+  outline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .btn-generate-more { width: 46px; height: 46px; align-self: flex-end; }
+  .btn-generate-more svg { width: 22px; height: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-generate-more { animation: none; }
 }
 
 /* ---------- View / sections ---------- */
@@ -624,6 +726,24 @@ button { font-family: inherit; }
   flex-wrap: wrap;
 }
 
+/* Per-card mini line chart — sits between meta + highlights/news */
+.kw-chart-shell {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  margin-top: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 10px 6px;
+  box-sizing: border-box;
+}
+.kw-chart-shell canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
 /* Highlights box — visually wraps the news inside each keyword card */
 .highlights-box {
   margin-top: 4px;
@@ -877,6 +997,7 @@ button { font-family: inherit; }
   .kw-vol { font-size: 15px; }
   .kw-head { gap: 10px; }
   .kw-meta { font-size: 11.5px; gap: 8px; }
+  .kw-chart-shell { height: 120px; padding: 6px 8px 4px; }
 
   /* Highlights box — slightly tighter on mobile */
   .highlights-box { padding: 12px 12px 14px; border-radius: 12px; }

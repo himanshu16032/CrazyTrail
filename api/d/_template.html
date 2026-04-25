@@ -138,6 +138,13 @@
       <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
       <path d="M18 14h-8M15 18h-5M10 6h8M10 10h8"/>
     </symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+    </symbol>
+    <symbol id="i-gemini" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2c.6 4.4 4.6 8.4 9 9-4.4.6-8.4 4.6-9 9-.6-4.4-4.6-8.4-9-9 4.4-.6 8.4-4.6 9-9z"/>
+    </symbol>
   </svg>
 
   <div class="app">
@@ -170,6 +177,31 @@
         </button>
       </nav>
 
+      <div class="nav-label">Read</div>
+      <nav class="ext-nav">
+        <a class="ext-nav-item" href="https://www.crazytrail.com/blog/find-trending-topics-before-they-blow-up"
+           target="_blank" rel="noopener noreferrer"
+           title="Find Trending Topics Before They Blow Up"
+           onclick="if(window.ctTrack)ctTrack('dashboard_blog_click',{slug:'find-trending-topics-before-they-blow-up'});">
+          <span class="ico"><svg><use href="#i-book"/></svg></span>
+          <span class="ext-nav-text">Find Trending Topics Before They Blow Up</span>
+        </a>
+        <a class="ext-nav-item" href="https://www.crazytrail.com/blog/exploding-topics-alternative-free"
+           target="_blank" rel="noopener noreferrer"
+           title="Best Free Exploding Topics Alternatives"
+           onclick="if(window.ctTrack)ctTrack('dashboard_blog_click',{slug:'exploding-topics-alternative-free'});">
+          <span class="ico"><svg><use href="#i-book"/></svg></span>
+          <span class="ext-nav-text">Best Free Exploding Topics Alternatives</span>
+        </a>
+        <a class="ext-nav-item" href="https://www.crazytrail.com/blog/trending-on-instagram-this-week"
+           target="_blank" rel="noopener noreferrer"
+           title="What's Trending on Instagram This Week"
+           onclick="if(window.ctTrack)ctTrack('dashboard_blog_click',{slug:'trending-on-instagram-this-week'});">
+          <span class="ico"><svg><use href="#i-book"/></svg></span>
+          <span class="ext-nav-text">What's Trending on Instagram This Week</span>
+        </a>
+      </nav>
+
       <div class="sidebar-footer">
         Built for creators · CrazyTrail
       </div>
@@ -179,9 +211,21 @@
     <main class="main">
 
       <header class="topbar">
-        <div class="greet" id="greet"></div>
-        <h1 id="view-title"></h1>
-        <div class="subtitle" id="view-subtitle"></div>
+        <div class="topbar-row">
+          <div class="topbar-text">
+            <div class="greet" id="greet"></div>
+            <h1 id="view-title"></h1>
+            <div class="subtitle" id="view-subtitle"></div>
+          </div>
+          <a id="generate-more-btn"
+             class="btn-generate-more"
+             href="https://www.crazytrail.com/"
+             aria-label="Generate More"
+             title="Generate More"
+             onclick="if(window.ctTrack)ctTrack('dashboard_generate_more_click',{destination:'home'});">
+            <svg aria-hidden="true"><use href="#i-gemini"/></svg>
+          </a>
+        </div>
       </header>
 
       <!-- ============ OVERVIEW VIEW ============ -->
@@ -394,7 +438,6 @@
       const target = document.getElementById(targetId);
       target.innerHTML = '';
       topics.forEach(t => {
-        const isPos = t.change_pct >= 0;
         const row = document.createElement('div');
         row.className = 'topic-row';
         row.innerHTML = `
@@ -405,7 +448,7 @@
           <div></div>
           <div class="row-actions">
             <div class="vol">${fmt(t.current_volume)}</div>
-            <div class="delta ${isPos ? 'delta-pos' : 'delta-neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</div>
+            <div class="delta delta-pos">▲ ${Math.abs(t.change_pct).toFixed(1)}%</div>
           </div>`;
         row.addEventListener('click', () => switchView(jumpView));
         target.appendChild(row);
@@ -540,7 +583,6 @@
       target.innerHTML = '';
 
       topics.forEach((t, idx) => {
-        const isPos = t.change_pct >= 0;
         const articles = t.articles || [];
         const card = document.createElement('article');
         card.className = 'kw-card';
@@ -555,7 +597,7 @@
             </div>
             <div class="kw-stats">
               <span class="kw-vol">${fmt(t.current_volume)}</span>
-              <span class="delta-pill ${isPos ? '' : 'neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</span>
+              <span class="delta-pill">▲ ${Math.abs(t.change_pct).toFixed(1)}%</span>
             </div>
           </div>
 
@@ -565,6 +607,10 @@
               <button class="copy-mini" data-act="copy-tags" title="Copy hashtags"><svg><use href="#i-copy"/></svg></button>
               ${t.tags.map(x => `<span class="tag">${x}</span>`).join('')}
             </span>
+          </div>
+
+          <div class="kw-chart-shell">
+            <canvas id="kwchart-${category}-${idx}"></canvas>
           </div>
 
           <div class="highlights-box">
@@ -597,6 +643,66 @@
         });
 
         target.appendChild(card);
+        buildKwCardChart(category, idx, t);
+      });
+    }
+
+    /* Per-card mini line chart — uses the per-term series from the backend payload. */
+    function buildKwCardChart(category, idx, topic) {
+      const el = document.getElementById(`kwchart-${category}-${idx}`);
+      if (!el || !topic.series || !topic.series.length) return;
+      const color = CATEGORY_ACCENT[category] || cssVar('--primary');
+      new Chart(el, {
+        type: 'line',
+        data: {
+          labels: topic.series_labels || topic.series.map((_, i) => i + 1),
+          datasets: [{
+            label: topic.keyword,
+            data: topic.series,
+            borderColor: color,
+            backgroundColor: ctx => {
+              const { chart } = ctx;
+              const { ctx: c, chartArea } = chart;
+              if (!chartArea) return color + '11';
+              return lineGradient(c, chartArea, color);
+            },
+            fill: true,
+            tension: 0.42,
+            borderWidth: 2.2,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            pointHoverBorderWidth: 2,
+            pointHoverBorderColor: '#fff',
+            pointHoverBackgroundColor: color,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'nearest', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => `${c.label}: ${fmt(c.parsed.y)}` } },
+            datalabels: { display: false },
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                color: cssVar('--ink-mute'),
+                font: { size: 9.5 },
+                maxRotation: 0,
+                autoSkip: true,
+                maxTicksLimit: isMobile() ? 4 : 6,
+              },
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false },
+              ticks: { color: cssVar('--ink-mute'), font: { size: 9.5 }, maxTicksLimit: 4 },
+            },
+          },
+        },
       });
     }
 
@@ -651,7 +757,6 @@
       const topics = DATA[category];
       target.innerHTML = '';
       topics.forEach((t, idx) => {
-        const isPos = t.change_pct >= 0;
         const row = document.createElement('div');
         row.className = 'topic-row detail';
         row.innerHTML = `
@@ -662,7 +767,7 @@
           <div></div>
           <div class="row-actions">
             <div class="vol">${fmt(t.current_volume)}</div>
-            <div class="delta ${isPos ? 'delta-pos' : 'delta-neg'}">${isPos ? '▲' : '▼'} ${Math.abs(t.change_pct).toFixed(1)}%</div>
+            <div class="delta delta-pos">▲ ${Math.abs(t.change_pct).toFixed(1)}%</div>
           </div>`;
         row.addEventListener('click', () => {
           const card = document.getElementById(`card-${category}-${idx}`);
