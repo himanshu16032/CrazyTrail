@@ -3,6 +3,8 @@ import { ArrowUpRight, TrendingUp, Eye, Users, Heart } from 'lucide-react';
 import GradientButton from './ui/GradientButton';
 import AnimatedCounter from './ui/AnimatedCounter';
 import BlobBackground from './ui/BlobBackground';
+import SocialProof from './SocialProof';
+import { track } from '../lib/tracking';
 
 const stats = [
   { icon: Eye, label: 'Views', value: 45000, suffix: '+', color: 'text-primary' },
@@ -29,7 +31,6 @@ const illustrationConfig = {
 
 const floatingEmojis = [
   // Set `showOnMobile` to false to hide an emoji on phones while keeping it on desktop.
-  { emoji: '❤️',  x: '3%',  y: '9%',   delay: 0,    dur: 2.2,  size: 'text-4xl sm:text-5xl', showOnMobile: true },
   { emoji: '💬',  x: '92%', y: '14%',  delay: 1.8,  dur: 6.1,  size: 'text-4xl sm:text-5xl', showOnMobile: true },
   { emoji: '🔥',  x: '78%', y: '78%',  delay: 0.4,  dur: 4.7,  size: 'text-3xl sm:text-4xl', showOnMobile: true },
   { emoji: '📩',  x: '6%',  y: '68%',  delay: 2.3,  dur: 5.8,  size: 'text-3xl sm:text-4xl', showOnMobile: false },
@@ -135,9 +136,16 @@ export default function Hero() {
               <span className="text-accent-green font-bold">trends</span> so you can focus on creating amazing content.
             </motion.p>
             <motion.div variants={fadeUp} custom={3}>
-              <GradientButton onClick={() => document.getElementById('submit')?.scrollIntoView({ behavior: 'smooth' })}>
+              <GradientButton onClick={() => {
+                track('cta_catch_wave_click', { location: 'hero' });
+                document.getElementById('submit')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 Catch the Next Wave <ArrowUpRight className="w-5 h-5" />
               </GradientButton>
+            </motion.div>
+
+            <motion.div variants={fadeUp} custom={4}>
+              <SocialProof />
             </motion.div>
           </motion.div>
 

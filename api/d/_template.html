@@ -11,6 +11,97 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   <style>__INLINE_CSS__</style>
+
+  <!-- ====== Anonymous visitor identifier (shared with main site cookie) ====== -->
+  <script>
+  (function () {
+    var COOKIE = 'ct_vid';
+    function getCookie(n) {
+      var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    function setCookie(n, v) {
+      var host = location.hostname;
+      var isLocal = host === 'localhost' || host === '127.0.0.1';
+      var domain = isLocal ? '' : '; domain=.' + host.replace(/^www\./, '');
+      document.cookie = n + '=' + encodeURIComponent(v) + '; path=/; max-age=' + (60*60*24*365*2) + '; samesite=lax' + domain;
+    }
+    function uuid() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'ct-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+    }
+    var vid = null;
+    try { vid = localStorage.getItem('ct_visitor_id'); } catch(_) {}
+    if (!vid) vid = getCookie(COOKIE);
+    if (!vid) vid = uuid();
+    try { localStorage.setItem('ct_visitor_id', vid); } catch(_) {}
+    setCookie(COOKIE, vid);
+
+    var count = 0;
+    try { count = parseInt(localStorage.getItem('ct_visit_count') || '0', 10); } catch(_) {}
+    var sessionTouched = false;
+    try { sessionTouched = sessionStorage.getItem('ct_session_seen') === '1'; } catch(_) {}
+    if (!sessionTouched) {
+      count = (isNaN(count) ? 0 : count) + 1;
+      try { localStorage.setItem('ct_visit_count', String(count)); } catch(_) {}
+      try { sessionStorage.setItem('ct_session_seen', '1'); } catch(_) {}
+    }
+    var firstSeen = null, lastSeen = null;
+    try { firstSeen = localStorage.getItem('ct_first_seen'); } catch(_) {}
+    if (!firstSeen) {
+      firstSeen = new Date().toISOString();
+      try { localStorage.setItem('ct_first_seen', firstSeen); } catch(_) {}
+    }
+    try { lastSeen = localStorage.getItem('ct_last_seen'); } catch(_) {}
+    try { localStorage.setItem('ct_last_seen', new Date().toISOString()); } catch(_) {}
+
+    window.__CT_VISITOR__ = {
+      visitorId: vid,
+      visitCount: count,
+      isReturning: count > 1,
+      firstSeen: firstSeen,
+      lastSeen: lastSeen || new Date().toISOString(),
+    };
+  })();
+  </script>
+
+  <!-- ====== PostHog (lazy, snippet from posthog-js docs) ====== -->
+  <script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init("phc_BVo1yNNAHIIsiA6r3unGVkpwcXwK60yZAyFBIJJLv4P", {
+    api_host: "https://us.i.posthog.com",
+    person_profiles: "identified_only",
+    capture_pageview: false,
+    capture_pageleave: true,
+    autocapture: true,
+    loaded: function (ph) {
+      var v = window.__CT_VISITOR__ || {};
+      try {
+        ph.identify(v.visitorId, {
+          visitor_id: v.visitorId,
+          visit_count: v.visitCount,
+          first_seen: v.firstSeen,
+          last_seen: v.lastSeen,
+          is_returning: v.isReturning,
+        });
+        ph.register({
+          visitor_id: v.visitorId,
+          visit_count: v.visitCount,
+          is_returning: v.isReturning,
+          surface: 'dashboard',
+        });
+        ph.capture('dashboard_view', {
+          dashboard_id: location.pathname.replace(/^\/d\//, ''),
+          referrer: document.referrer,
+          path: location.pathname,
+        });
+      } catch (e) {}
+    }
+  });
+  window.ctTrack = function (name, props) {
+    try { window.posthog && posthog.capture(name, Object.assign({ surface: 'dashboard' }, props || {})); } catch(e) {}
+  };
+  </script>
 </head>
 <body>
 
@@ -53,10 +144,12 @@
 
     <!-- ============ SIDEBAR ============ -->
     <aside class="sidebar">
-      <div class="brand">
+      <a class="brand" href="/" data-ct-action="brand-home"
+         onclick="if(window.ctTrack)ctTrack('dashboard_brand_click',{destination:'home'});"
+         style="text-decoration:none;color:inherit;cursor:pointer">
         <div class="brand-logo"><svg><use href="#i-rocket"/></svg></div>
         <div class="brand-name">Crazy<span>Trail</span></div>
-      </div>
+      </a>
 
       <div class="nav-label">Discover</div>
       <nav class="nav" id="nav">
@@ -483,7 +576,8 @@
             ${
               articles.length
                 ? `<ul class="news-list">${articles.map(a => `
-                    <li><a href="${a.link}" target="_blank" rel="noopener noreferrer">
+                    <li><a href="${a.link}" target="_blank" rel="noopener noreferrer"
+                          onclick="if(window.ctTrack)ctTrack('dashboard_article_click',{keyword:'${(t.keyword||'').replace(/'/g,'')}',category:'${category}',source:'${(a.source||'').replace(/'/g,'')}',url:'${a.link}'});">
                       ${a.title}${a.source ? `<span class="src">${a.source}</span>` : ''}
                     </a></li>`).join('')}</ul>`
                 : `<div class="news-empty">No live news fetched (offline or no results).</div>`
@@ -494,10 +588,12 @@
         card.querySelector('[data-act="copy-name"]').addEventListener('click', e => {
           e.stopPropagation();
           copyToClipboard(t.keyword, e.currentTarget, 'Topic copied');
+          if (window.ctTrack) ctTrack('dashboard_copy_keyword', { keyword: t.keyword, category: category });
         });
         card.querySelector('[data-act="copy-tags"]').addEventListener('click', e => {
           e.stopPropagation();
           copyToClipboard(t.tags.join(' '), e.currentTarget, 'Hashtags copied');
+          if (window.ctTrack) ctTrack('dashboard_copy_hashtags', { keyword: t.keyword, category: category, tag_count: t.tags.length });
         });
 
         target.appendChild(card);
@@ -606,6 +702,7 @@
       document.getElementById('view-title').textContent = title;
       document.getElementById('view-subtitle').textContent = sub;
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.ctTrack) ctTrack('dashboard_switch_view', { view: view });
     }
     document.querySelectorAll('.nav-item[data-view], .bnav-item[data-view]').forEach(b => {
       b.addEventListener('click', () => { switchView(b.dataset.view); history.replaceState(null, '', '#' + b.dataset.view); });

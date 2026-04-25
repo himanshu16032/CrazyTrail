@@ -72,3 +72,9 @@ h1, h2, h3, h4, h5, h6 {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+.prose-blog a {
+  color: var(--color-primary);
+  text-underline-offset: 2px;
+}
+.prose-blog a:hover { text-decoration: underline; }

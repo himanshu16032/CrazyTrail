@@ -2,6 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { getVisitorProfile, attachPostHog, trackPageView } from './lib/tracking'
+
+if (typeof window !== 'undefined') {
+  getVisitorProfile();
+}
 
 let posthogLoaded = false;
 const loadPostHog = async () => {
@@ -16,26 +21,23 @@ const loadPostHog = async () => {
     if (!POSTHOG_CONFIG.apiKey) return;
 
     posthog.init(POSTHOG_CONFIG.apiKey, POSTHOG_CONFIG.options);
+    attachPostHog(posthog);
 
     const params = new URLSearchParams(window.location.search);
     const allParams = Object.fromEntries(params.entries());
     const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
     const utmParams = {};
-    utmKeys.forEach((k) => {
-      if (allParams[k]) utmParams[k] = allParams[k];
-    });
+    utmKeys.forEach((k) => { if (allParams[k]) utmParams[k] = allParams[k]; });
 
-    posthog.capture('page_visit', {
-      path: window.location.pathname,
+    trackPageView({
       search: window.location.search,
       hash: window.location.hash,
-      referrer: document.referrer,
       has_params: params.size > 0,
       params: allParams,
       ...utmParams,
     });
   } catch {
-    // Analytics failure should not break the app
+    // Analytics failure should never break the app.
   }
 };
 
