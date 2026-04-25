@@ -1,10 +1,11 @@
 import { Rocket, Heart } from 'lucide-react';
 
 const links = [
-  { label: 'Home', href: '#home' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Why Us', href: '#why-us' },
-  { label: 'Get Started', href: '#submit' },
+  { label: 'Home', href: '/' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Why Us', href: '/#why-us' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Get Started', href: '/#submit' },
 ];
 
 export default function Footer() {
