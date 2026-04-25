@@ -263,55 +263,68 @@ button { font-family: inherit; }
   max-width: 720px;
 }
 
-/* Icon-only Gemini sparkle button — pulses continuously. Click → home. */
-@keyframes btn-gemini-pulse {
+/* Pill: [ Generate More with AI ][ ✦ ] — only the Gemini sparkle on the
+ * right zooms in/out, the text label sits still. */
+@keyframes btn-gemini-spark {
   0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 8px 22px rgba(108, 99, 255, 0.32);
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
   }
   50% {
-    transform: scale(1.10);
-    box-shadow: 0 14px 34px rgba(108, 99, 255, 0.55);
+    transform: scale(1.22) rotate(8deg);
+    filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.55));
   }
 }
 .btn-generate-more {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  padding: 0;
-  border-radius: 50%;
+  gap: 10px;
+  padding: 12px 16px 12px 20px;
+  border-radius: 999px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #fff;
   text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
   border: none;
   cursor: pointer;
   flex: 0 0 auto;
-  animation: btn-gemini-pulse 2.2s ease-in-out infinite;
-  transition: background 0.2s ease, filter 0.2s ease;
-  will-change: transform, box-shadow;
+  box-shadow: 0 8px 22px rgba(108, 99, 255, 0.32);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
 }
-.btn-generate-more svg {
-  width: 26px;
-  height: 26px;
+.btn-generate-more .btn-text { line-height: 1; }
+.btn-generate-more .btn-spark {
+  width: 18px;
+  height: 18px;
   fill: currentColor;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+  display: inline-block;
+  transform-origin: center;
+  animation: btn-gemini-spark 1.8s ease-in-out infinite;
+  will-change: transform, filter;
 }
 .btn-generate-more:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(108, 99, 255, 0.42);
   background: linear-gradient(135deg, var(--primary-light), var(--primary));
-  filter: brightness(1.05);
 }
+.btn-generate-more:active { transform: translateY(0); }
 .btn-generate-more:focus-visible {
   outline: 3px solid var(--primary-soft);
   outline-offset: 3px;
 }
 @media (max-width: 720px) {
-  .btn-generate-more { width: 46px; height: 46px; align-self: flex-end; }
-  .btn-generate-more svg { width: 22px; height: 22px; }
+  .btn-generate-more {
+    padding: 10px 14px 10px 16px;
+    font-size: 13px;
+    align-self: flex-end;
+  }
+  .btn-generate-more .btn-spark { width: 16px; height: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn-generate-more { animation: none; }
+  .btn-generate-more .btn-spark { animation: none; }
 }
 
 /* ---------- View / sections ---------- */
