@@ -128,8 +128,8 @@ export default function Hero() {
       ))}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div initial="hidden" animate="visible" className="text-center lg:text-left">
+        <div className="grid lg:grid-cols-2 lg:grid-rows-[auto_auto] gap-12 lg:gap-x-16 lg:gap-y-8 items-center">
+          <motion.div initial="hidden" animate="visible" className="order-1 lg:order-none lg:col-start-1 lg:row-start-1 text-center lg:text-left">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 bg-primary/10 text-primary font-semibold px-4 py-2 rounded-full mb-6 text-sm">
               <TrendingUp className="w-4 h-4" />
               Trend Discovery for Creators
@@ -177,16 +177,13 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            <motion.div variants={fadeUp} custom={4}>
-              <SocialProof />
-            </motion.div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex w-full max-w-lg mx-auto flex-col gap-6"
+            className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 flex w-full max-w-lg mx-auto flex-col gap-6"
           >
             <div className="relative w-full max-w-md self-center">
               <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-gray-100">
@@ -227,6 +224,16 @@ export default function Hero() {
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent-yellow rounded-2xl rotate-12 -z-10 opacity-60" />
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-accent-green rounded-2xl -rotate-12 -z-10 opacity-60" />
             </div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            custom={4}
+            className="order-3 lg:order-none lg:col-start-1 lg:row-start-2 text-center lg:text-left"
+          >
+            <SocialProof />
           </motion.div>
         </div>
       </div>
