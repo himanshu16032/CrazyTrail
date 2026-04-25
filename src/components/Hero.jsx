@@ -1,10 +1,29 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Eye, Users, Heart } from 'lucide-react';
+import { TrendingUp, Eye, Users, Heart } from 'lucide-react';
 import GradientButton from './ui/GradientButton';
 import AnimatedCounter from './ui/AnimatedCounter';
 import BlobBackground from './ui/BlobBackground';
 import SocialProof from './SocialProof';
 import { track } from '../lib/tracking';
+
+function GeminiSpark({ className = '' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="gemini-spark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#6C63FF" />
+          <stop offset="50%" stopColor="#EF476F" />
+          <stop offset="100%" stopColor="#FF8C42" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 1.5c.4 4.6 2.9 7.1 7.5 7.5v6c-4.6.4-7.1 2.9-7.5 7.5h-6c-.4-4.6-2.9-7.1-7.5-7.5v-6c4.6-.4 7.1-2.9 7.5-7.5h6z"
+        transform="translate(1.5 1.5) scale(0.79)"
+        fill="url(#gemini-spark-grad)"
+      />
+    </svg>
+  );
+}
 
 const stats = [
   { icon: Eye, label: 'Views', value: 45000, suffix: '+', color: 'text-primary' },
@@ -135,13 +154,27 @@ export default function Hero() {
               <span className="text-accent-orange font-bold">hashtags</span>, and{' '}
               <span className="text-accent-green font-bold">trends</span> so you can focus on creating amazing content.
             </motion.p>
-            <motion.div variants={fadeUp} custom={3}>
+            <motion.div variants={fadeUp} custom={3} className="flex items-center justify-center lg:justify-start gap-3">
               <GradientButton onClick={() => {
                 track('cta_catch_wave_click', { location: 'hero' });
                 document.getElementById('submit')?.scrollIntoView({ behavior: 'smooth' });
               }}>
-                Catch the Next Wave <ArrowUpRight className="w-5 h-5" />
+                Catch the Next Viral Wave with AI
               </GradientButton>
+              <motion.div
+                aria-hidden="true"
+                className="relative flex items-center justify-center"
+                animate={{ scale: [0.85, 1.25, 0.85], rotate: [0, 12, -8, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <motion.span
+                  className="absolute inset-0 rounded-full blur-xl"
+                  style={{ background: 'radial-gradient(circle, rgba(108,99,255,0.55), rgba(239,71,111,0.25), transparent 70%)' }}
+                  animate={{ opacity: [0.35, 0.85, 0.35], scale: [0.8, 1.4, 0.8] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <GeminiSpark className="relative w-8 h-8 drop-shadow-[0_2px_8px_rgba(108,99,255,0.5)]" />
+              </motion.div>
             </motion.div>
 
             <motion.div variants={fadeUp} custom={4}>
