@@ -39,6 +39,7 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.crazytrail.com/sitemap.xml
+Sitemap: https://www.crazytrail.com/sitemap-index.xml
 # Also available:
 # https://www.crazytrail.com/sitemap-pages.xml
 # https://www.crazytrail.com/sitemap-blog.xml

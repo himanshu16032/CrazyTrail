@@ -277,6 +277,7 @@ CrazyTrail is not a delivery, shipping, logistics, or travel service.
 ## Sitemaps for Search Console
 
 - ${SITE}/sitemap.xml
+- ${SITE}/sitemap-index.xml
 - ${SITE}/sitemap-pages.xml
 - ${SITE}/sitemap-blog.xml
 - ${SITE}/sitemap-topics.xml
@@ -291,6 +292,7 @@ CrazyTrail is not a delivery, shipping, logistics, or travel service.
 
 for (const [name, content] of [
   ['sitemap.xml', sitemapIndex],
+  ['sitemap-index.xml', sitemapIndex],
   ['sitemap-pages.xml', sitemapPages],
   ['sitemap-blog.xml', sitemapBlog],
   ['sitemap-topics.xml', sitemapTopics],

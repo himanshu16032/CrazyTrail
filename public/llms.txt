@@ -24,6 +24,7 @@ CrazyTrail is not a delivery, shipping, logistics, or travel service.
 ## Sitemaps for Search Console
 
 - https://www.crazytrail.com/sitemap.xml
+- https://www.crazytrail.com/sitemap-index.xml
 - https://www.crazytrail.com/sitemap-pages.xml
 - https://www.crazytrail.com/sitemap-blog.xml
 - https://www.crazytrail.com/sitemap-topics.xml
