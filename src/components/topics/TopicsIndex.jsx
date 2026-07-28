@@ -16,7 +16,7 @@ export default function TopicsIndex() {
   const steal = TOPICS.filter((t) => t.cluster === 'Competitor Steal');
 
   useSeo({
-    title: 'Steal Competitor Trend Traffic — Free Short-Form Topic Guides | CrazyTrail',
+    title: 'Free Topic Guides for Reels & Shorts | CrazyTrail',
     description: 'Rank for Treendly alternative, Glimpse alternative, free viral Reels ideas, and YouTube Shorts content ideas — medium/low competition keywords with real traffic, plus high-volume commercial terms.',
     keywords: 'Treendly alternative free, Glimpse alternative free, free viral Reels ideas, YouTube Shorts content ideas free, free trend tool for Instagram creators, exploding topics alternative',
     canonical: `${SITE_URL}/topics`,

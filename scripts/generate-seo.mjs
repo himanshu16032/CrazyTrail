@@ -66,7 +66,7 @@ const pages = [
   {
     path: '/topics',
     file: 'topics/index.html',
-    title: 'Steal Competitor Trend Traffic — Free Short-Form Topic Guides | CrazyTrail',
+    title: 'Free Topic Guides for Reels & Shorts | CrazyTrail',
     description: 'Guides for Treendly alternative, Glimpse alternative, free viral Reels ideas, YouTube Shorts content ideas, and AI short video analysis.',
     body: `
       <h1>CrazyTrail topic guides — short-form keyword cluster</h1>
