@@ -2,9 +2,9 @@ export const POSTS = [
   {
     slug: 'find-trending-topics-before-they-blow-up',
     title: 'How to Find Trending Topics Before They Blow Up',
-    titleTag: 'How to Find Trending Topics Before They Blow Up | CrazyTrail 2026',
-    h1: 'How to Find Trending Topics Before They Blow Up — The 2026 Playbook',
-    description: 'Stop posting trends 3 days late. Discover exactly how smart creators find trending topics before they go viral — free methods for Instagram & YouTube. No guessing.',
+    titleTag: 'Find Trending Topics Early — Free CrazyTrail Alerts',
+    h1: 'How to Find Trending Topics Before They Blow Up — Then Get Them Weekly',
+    description: 'Stop posting trends 3 days late. Learn the early-window system — then get free CrazyTrail alerts for Instagram & YouTube topics 3–5 days before peak.',
     keywords: 'find trending topics before they blow up, trending topics for content creators, early trend detection, content ideas instagram 2026, how to find viral topics, trend velocity, viral window, hashtag research, instagram trends, youtube trends',
     category: 'Content Strategy',
     readingTime: '12 min read',
@@ -12,6 +12,7 @@ export const POSTS = [
     updatedAt: '2026-07-28',
     excerpt: 'Two creators post the same topic on the same day. One gets 400 views. The other gets 2.1 million. The difference is four days — not talent. Here is the system to be the second creator.',
     primaryKeyword: 'find trending topics before they blow up',
+    relatedTopics: ['ai-short-video-analysis', 'early-viral-window', 'free-viral-reels-ideas'],
     faq: [
       {
         q: 'How early can you actually detect an Instagram trend?',
@@ -49,9 +50,9 @@ export const POSTS = [
   {
     slug: 'exploding-topics-alternative-free',
     title: '7 Best Free Alternatives to Exploding Topics',
-    titleTag: 'Exploding Topics Alternative Free — 7 Best Tools for Creators 2026',
-    h1: 'Exploding Topics Alternative Free: 7 Best Tools for Creators (2026)',
-    description: 'Best Exploding Topics alternative free for Instagram & YouTube creators. Compare CrazyTrail, Treendly, Glimpse, Google Trends & more — without the $39/mo wall.',
+    titleTag: 'Exploding Topics Alternative Free — Start CrazyTrail',
+    h1: 'Exploding Topics Alternative Free: 7 Best Tools (Start With CrazyTrail)',
+    description: 'Best free Exploding Topics alternative for Instagram & YouTube creators. Compare options — then start CrazyTrail free for early Reels and Shorts alerts.',
     keywords: 'exploding topics alternative free, exploding topics alternative, treendly alternative free, glimpse alternative free, free trend discovery tool, exploding topics competitors',
     category: 'Tools & Comparisons',
     readingTime: '10 min read',
@@ -59,6 +60,7 @@ export const POSTS = [
     updatedAt: '2026-07-28',
     excerpt: 'Exploding Topics is genuinely a great product — but $39 a month is brutal when you are a one-person creator. Here are the seven free tools that come closest, ranked.',
     primaryKeyword: 'exploding topics alternative free',
+    relatedTopics: ['treendly-alternative-free', 'glimpse-alternative-free', 'free-trend-tool-instagram-creators'],
     faq: [
       {
         q: 'Is there really a free Exploding Topics alternative that’s any good?',
@@ -85,9 +87,9 @@ export const POSTS = [
   {
     slug: 'trending-on-instagram-this-week',
     title: "What's Trending on Instagram This Week",
-    titleTag: "What's Trending on Instagram This Week — Free Reels Ideas July 2026",
-    h1: "What's Trending on Instagram This Week (Free Reels Ideas)",
-    description: "What's trending on Instagram this week + free Reels ideas still early — formats, hashtags, audio. Updated for the week of July 28, 2026.",
+    titleTag: "What's Trending on Instagram This Week — Free Alerts",
+    h1: "What's Trending on Instagram This Week (Get Free Weekly Ideas)",
+    description: "What's trending on Instagram this week + free Reels ideas still early. Updated July 28, 2026 — or get CrazyTrail weekly niche alerts automatically.",
     keywords: 'what is trending on instagram this week, instagram reels ideas this week, free viral reels ideas, trending instagram reels, trending instagram hashtags, trending audio instagram',
     category: 'Weekly Trends',
     readingTime: '8 min read',
@@ -95,6 +97,7 @@ export const POSTS = [
     updatedAt: '2026-07-28',
     excerpt: 'A live snapshot of what is moving on Instagram right now — Reel formats, hashtags, audios, and niche-by-niche signals. Refreshed for the week of July 28, 2026.',
     primaryKeyword: 'what is trending on instagram this week',
+    relatedTopics: ['free-viral-reels-ideas', 'trending-instagram-reels', 'free-trend-tool-instagram-creators'],
     faq: [
       {
         q: 'What is currently trending on Instagram?',

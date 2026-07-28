@@ -130,6 +130,21 @@ export default function TopicPage({ slug }) {
           </h1>
           <p className="text-dark text-lg md:text-xl leading-relaxed font-medium mb-6">{topic.excerpt}</p>
 
+          <aside className="mb-8 bg-white border border-primary/15 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+            <p className="text-dark text-sm md:text-base leading-relaxed">
+              Want {topic.primaryKeyword} in your inbox early? Free weekly CrazyTrail alerts — no card.
+            </p>
+            <GradientButton
+              onClick={() => {
+                track('topic_cta_click', { slug: topic.slug, location: 'top' });
+                navigate('/?ref=topic-' + topic.slug);
+              }}
+              className="shrink-0 w-full sm:w-auto"
+            >
+              <Send className="w-4 h-4" /> Get free alerts
+            </GradientButton>
+          </aside>
+
           <CompetitorCompare slug={topic.slug} />
 
           <div className="my-5 rounded-2xl border-l-4 border-primary/40 bg-primary/5 px-4 py-3">
