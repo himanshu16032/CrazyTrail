@@ -1,19 +1,21 @@
 import { motion } from 'framer-motion';
 import { lazy, Suspense } from 'react';
-import { Calendar, Clock, ArrowUpRight, BookOpen } from 'lucide-react';
+import { Calendar, Clock, ArrowUpRight, BookOpen, Send } from 'lucide-react';
 import { POSTS } from './posts';
-import { Link } from '../../lib/router';
+import { Link, navigate } from '../../lib/router';
 import { useSeo } from '../../lib/seo';
 import { OG_IMAGE, SITE_URL } from '../../lib/siteContent';
 import { track } from '../../lib/tracking';
+import Breadcrumbs from '../Breadcrumbs';
+import GradientButton from '../ui/GradientButton';
 
 const Footer = lazy(() => import('../Footer'));
 
 export default function BlogIndex() {
   useSeo({
-    title: 'CrazyTrail Blog — Trend Discovery Guides for Creators',
-    description: 'Practical guides for finding trending topics before they peak — written for Instagram and YouTube creators. Free tools, weekly Instagram trends, and timing playbooks.',
-    keywords: 'crazytrail blog, content creator blog, trending topics guides, instagram trends blog, youtube trends, viral content, hashtag research',
+    title: 'CrazyTrail Blog — Free Trend Alerts & Creator Guides',
+    description: 'Guides that help you film earlier — then start free CrazyTrail alerts for Instagram Reels and YouTube Shorts topics 3–5 days before peak.',
+    keywords: 'crazytrail blog, free trend alerts, trending topics guides, instagram trends blog, youtube shorts ideas, exploding topics alternative free',
     canonical: `${SITE_URL}/blog`,
     ogImage: OG_IMAGE,
     ogType: 'website',
@@ -23,7 +25,7 @@ export default function BlogIndex() {
         '@type': 'Blog',
         name: 'CrazyTrail Blog',
         url: `${SITE_URL}/blog`,
-        description: 'Trend discovery guides, weekly Instagram trends, and free tool comparisons for content creators.',
+        description: 'Creator guides that lead to free CrazyTrail early-window Reels and Shorts alerts.',
         publisher: {
           '@type': 'Organization',
           name: 'CrazyTrail',
@@ -55,6 +57,7 @@ export default function BlogIndex() {
     <>
       <main className="pt-28 pb-20 md:pt-32 md:pb-28 bg-cream min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blog' }]} />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -65,15 +68,24 @@ export default function BlogIndex() {
               <BookOpen className="w-4 h-4" /> CrazyTrail Blog
             </span>
             <h1 className="font-heading font-900 text-4xl sm:text-5xl md:text-6xl text-dark leading-tight mb-4">
-              Trend Discovery,{' '}
+              Film earlier.{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-pink to-accent-orange">
-                Decoded.
+                Get alerts free.
               </span>
             </h1>
             <p className="text-dark-light text-base md:text-lg max-w-2xl mx-auto">
-              Honest guides for content creators who are tired of being late to every trend.
-              Written by humans who post, fail, learn, and post again.
+              Short guides for Instagram and YouTube creators — then start free CrazyTrail digests so early topics hit your inbox every week.
             </p>
+            <div className="mt-6 flex justify-center">
+              <GradientButton
+                onClick={() => {
+                  track('blog_index_cta_click');
+                  navigate('/?ref=blog');
+                }}
+              >
+                <Send className="w-4 h-4" /> Get free trend alerts
+              </GradientButton>
+            </div>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
@@ -98,17 +110,13 @@ export default function BlogIndex() {
                     <h2 className="font-heading font-bold text-lg md:text-xl text-dark leading-snug mb-3 group-hover:text-primary transition-colors">
                       {p.title}
                     </h2>
-                    <p className="text-dark-light text-sm leading-relaxed flex-1">{p.excerpt}</p>
-                    <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100 text-xs text-dark-light">
-                      <span className="flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5" /> {p.updatedAt}
+                    <p className="text-dark-light text-sm leading-relaxed flex-1 mb-4">{p.excerpt}</p>
+                    <div className="flex items-center gap-3 text-xs text-dark-light">
+                      <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {p.updatedAt}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {p.readingTime}</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-primary font-semibold">
+                        Read <ArrowUpRight className="w-3.5 h-3.5" />
                       </span>
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5" /> {p.readingTime}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5 mt-4 text-primary font-semibold text-sm">
-                      Read article <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </div>
                 </Link>

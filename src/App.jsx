@@ -33,10 +33,10 @@ function SectionFallback({ minH = 'min-h-[40vh]' }) {
 
 function HomePage() {
   useSeo({
-    title: 'CrazyTrail — AI Short Video Analysis for Reels & YouTube Shorts',
-    description: 'CrazyTrail uses short-video-specific LLMs to analyze hooks, formats, and velocity on Instagram Reels and YouTube Shorts — then alerts you 3–5 days before topics peak. Free for creators.',
+    title: 'CrazyTrail — Free Early Trend Alerts for Reels & Shorts',
+    description: 'Get free weekly Reels and YouTube Shorts topic alerts — scored by short-video AI 3–5 days before peak. No card. Start in under a minute.',
     canonical: `${SITE_URL}/`,
-    keywords: 'AI short video analysis, LLM video trend detection, YouTube Shorts trending topics, trending Instagram Reels, find trending topics before they blow up, early viral window, hashtag research for Reels',
+    keywords: 'free trend alerts, AI short video analysis, YouTube Shorts trending topics, trending Instagram Reels, find trending topics before they blow up, early viral window, exploding topics alternative free',
     ogImage: OG_IMAGE,
     ogType: 'website',
     jsonLd: homeJsonLd(),

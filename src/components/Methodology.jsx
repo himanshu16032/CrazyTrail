@@ -55,9 +55,9 @@ const FAQ_ITEMS = [
 
 export default function MethodologyPage() {
   useSeo({
-    title: 'How CrazyTrail’s Short-Video LLM Analyzes Reels & Shorts',
-    description: 'Methodology: CrazyTrail uses short-form-specific LLM analysis on hooks, pacing, captions, and velocity to detect Instagram Reels and YouTube Shorts trends 3–5 days early.',
-    keywords: 'AI short video analysis methodology, LLM analyze Reels, YouTube Shorts AI detection, CrazyTrail how it works, short form video LLM',
+    title: 'How CrazyTrail Finds Early Reels & Shorts Trends',
+    description: 'See how CrazyTrail’s short-video LLM scores hooks and velocity — then get free weekly alerts 3–5 days before Reels and Shorts topics peak.',
+    keywords: 'CrazyTrail how it works, AI short video analysis methodology, free Reels trend alerts, YouTube Shorts AI detection, short form video LLM',
     canonical: `${SITE_URL}/methodology`,
     ogImage: OG_IMAGE,
     ogType: 'article',
@@ -65,8 +65,8 @@ export default function MethodologyPage() {
       {
         '@context': 'https://schema.org',
         '@type': 'TechArticle',
-        headline: 'How CrazyTrail’s Short-Video LLM Analyzes Reels and Shorts',
-        description: 'Proprietary short-form video analysis methodology for early trend detection on Instagram Reels and YouTube Shorts.',
+        headline: 'How CrazyTrail Finds Early Reels and Shorts Trends',
+        description: 'How CrazyTrail turns short-form LLM analysis into free early-window alerts for Instagram and YouTube creators.',
         image: OG_IMAGE,
         datePublished: '2026-07-28T09:00:00+05:30',
         dateModified: '2026-07-28T09:00:00+05:30',
@@ -118,14 +118,24 @@ export default function MethodologyPage() {
             <Brain className="w-4 h-4" /> Methodology
           </span>
           <h1 className="font-heading font-900 text-3xl sm:text-4xl md:text-5xl text-dark leading-tight mb-5">
-            How CrazyTrail’s short-video LLM analyzes each rising clip
+            How CrazyTrail turns short-video AI into alerts you can film today
           </h1>
           <p className="text-dark text-lg md:text-xl leading-relaxed font-medium mb-4">
-            <strong>CrazyTrail</strong> is not a generic “AI ideas” blog. It is a short-form intelligence layer: models inspect rising Reels and Shorts, score what is still early, and email creators before Explore saturates the pattern.
+            <strong>CrazyTrail</strong> is not a generic “AI ideas” blog. It is a free alert product: models inspect rising Reels and Shorts, score what is still early, and email you before Explore saturates the pattern.
           </p>
-          <p className="text-dark-light leading-relaxed mb-10">
-            That is the new worth on this domain — proprietary short-video analysis, not recycled internet listicles.
+          <p className="text-dark-light leading-relaxed mb-8">
+            Read the pipeline below — or skip ahead and start free weekly digests for your niche.
           </p>
+          <div className="mb-10">
+            <GradientButton
+              onClick={() => {
+                track('methodology_cta_click', { location: 'top' });
+                navigate('/?ref=methodology');
+              }}
+            >
+              Get free short-video trend alerts
+            </GradientButton>
+          </div>
 
           <div className="space-y-4 mb-12">
             {STAGES.map((s) => (
@@ -144,15 +154,15 @@ export default function MethodologyPage() {
           </div>
 
           <section className="mb-12">
-            <h2 className="font-heading font-900 text-2xl text-dark mb-4">Why Google (and creators) should care</h2>
+            <h2 className="font-heading font-900 text-2xl text-dark mb-4">What you get after signup</h2>
             <ul className="list-disc pl-5 space-y-2 text-dark-light leading-relaxed">
-              <li>Original methodology page documenting how short-form LLM analysis works — primary-source signal, not a thin affiliate page.</li>
-              <li>Topic cluster covering major short-form domains: platforms, craft, concepts, and niches.</li>
-              <li>Fact-dense definitions, signal tables, and FAQs designed for extraction by search and answer engines.</li>
-              <li>Clear entity disambiguation: CrazyTrail is a creator trend tool, not delivery/shipping.</li>
+              <li>Weekly niche topics still inside the early viral window (typically 3–5 days before peak).</li>
+              <li>Hooks, formats, and hashtag context you can film the same day on Reels or Shorts.</li>
+              <li>Free for individual creators — no dashboard tax, no card required to start.</li>
+              <li>Clear product identity: CrazyTrail is a creator trend alert tool, not delivery/shipping.</li>
             </ul>
             <Link to="/topics" className="inline-flex items-center gap-1.5 mt-5 text-primary font-semibold hover:underline">
-              Browse all topic guides <ArrowUpRight className="w-4 h-4" />
+              Browse topic guides <ArrowUpRight className="w-4 h-4" />
             </Link>
           </section>
 

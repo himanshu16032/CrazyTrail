@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowLeft, Send } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, ArrowUpRight, Send } from 'lucide-react';
 import { getPost, POSTS } from './posts';
+import { getTopic } from '../../lib/topics';
 import { Link, navigate } from '../../lib/router';
 import { useSeo } from '../../lib/seo';
 import { OG_IMAGE, SITE_URL } from '../../lib/siteContent';
@@ -54,6 +55,10 @@ export default function BlogPost({ slug }) {
   const related = useMemo(
     () => POSTS.filter((p) => p.slug !== slug).slice(0, 2),
     [slug]
+  );
+  const relatedTopics = useMemo(
+    () => (post?.relatedTopics || []).map(getTopic).filter(Boolean),
+    [post]
   );
 
   useEffect(() => {
@@ -173,6 +178,21 @@ export default function BlogPost({ slug }) {
             </h1>
           </motion.div>
 
+          <aside className="mb-8 bg-white border border-primary/15 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+            <p className="text-dark text-sm md:text-base leading-relaxed">
+              Prefer this in your inbox every week? Free CrazyTrail alerts — early Reels & Shorts topics, no card.
+            </p>
+            <GradientButton
+              onClick={() => {
+                track('blog_cta_click', { slug: post.slug, cta: 'top_get_alerts' });
+                navigate('/?ref=blog-' + post.slug);
+              }}
+              className="shrink-0 w-full sm:w-auto"
+            >
+              <Send className="w-4 h-4" /> Get free alerts
+            </GradientButton>
+          </aside>
+
           <div className="prose-blog">
             <ContentLoader post={post} />
           </div>
@@ -192,6 +212,26 @@ export default function BlogPost({ slug }) {
               <Send className="w-4 h-4" /> Get free trend alerts
             </GradientButton>
           </aside>
+
+          {relatedTopics.length > 0 && (
+            <div className="mt-14">
+              <h2 className="font-heading font-bold text-xl text-dark mb-4">Related CrazyTrail guides</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {relatedTopics.map((t) => (
+                  <Link
+                    key={t.slug}
+                    to={`/topics/${t.slug}`}
+                    onClick={() => track('topic_card_click', { slug: t.slug, location: 'blog_related', from: post.slug })}
+                    className="group block bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow"
+                  >
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-primary">{t.primaryKeyword}</span>
+                    <h3 className="font-heading font-bold text-lg text-dark mt-1 group-hover:text-primary transition-colors">{t.title}</h3>
+                    <p className="text-dark-light text-sm mt-2 leading-relaxed line-clamp-2">{t.excerpt}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Related */}
           {related.length > 0 && (
@@ -218,7 +258,7 @@ export default function BlogPost({ slug }) {
             <Link to="/topics" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">Topic guides</Link>
             <Link to="/topics/ai-short-video-analysis" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">AI short video analysis</Link>
             <Link to="/methodology" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">Methodology</Link>
-            <Link to="/feed.xml" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">RSS</Link>
+            <Link to="/?ref=blog-chip" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary inline-flex items-center gap-1">Get alerts <ArrowUpRight className="w-3 h-3" /></Link>
           </div>
 
           <TrustBlock />
