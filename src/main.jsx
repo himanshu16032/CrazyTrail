@@ -4,6 +4,11 @@ import './index.css'
 import App from './App.jsx'
 import { getVisitorProfile, attachPostHog, trackPageView } from './lib/tracking'
 
+if (typeof document !== 'undefined') {
+  document.documentElement.classList.add('js');
+  document.getElementById('seo-static')?.remove();
+}
+
 if (typeof window !== 'undefined') {
   getVisitorProfile();
 }

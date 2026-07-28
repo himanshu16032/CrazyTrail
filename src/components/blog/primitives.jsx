@@ -94,18 +94,20 @@ function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
-      <button
-        type="button"
-        className="w-full flex items-center justify-between text-left px-5 py-4 cursor-pointer"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-      >
-        <span className="font-heading font-bold text-dark text-base md:text-lg pr-3">{q}</span>
-        {open ? <ChevronUp className="w-5 h-5 text-dark-light shrink-0" /> : <ChevronDown className="w-5 h-5 text-dark-light shrink-0" />}
-      </button>
-      {open && (
-        <div className="px-5 pb-5 text-dark-light leading-relaxed">{a}</div>
-      )}
+      <h3>
+        <button
+          type="button"
+          className="w-full flex items-center justify-between text-left px-5 py-4 cursor-pointer"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+        >
+          <span className="font-heading font-bold text-dark text-base md:text-lg pr-3">{q}</span>
+          {open ? <ChevronUp className="w-5 h-5 text-dark-light shrink-0" /> : <ChevronDown className="w-5 h-5 text-dark-light shrink-0" />}
+        </button>
+      </h3>
+      <div className={open ? 'px-5 pb-5 text-dark-light leading-relaxed' : 'sr-only'}>
+        {a}
+      </div>
     </div>
   );
 }

@@ -8,7 +8,8 @@ import { track } from '../lib/tracking';
 const sectionLinks = [
   { label: 'Home', href: '/#home', section: '#home' },
   { label: 'How It Works', href: '/#how-it-works', section: '#how-it-works' },
-  { label: 'Why Us', href: '/#why-us', section: '#why-us' },
+  { label: 'Topics', href: '/topics', section: null },
+  { label: 'FAQ', href: '/#faq', section: '#faq' },
   { label: 'Get Started', href: '/#submit', section: '#submit' },
 ];
 
@@ -33,6 +34,13 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const goSection = (e, link) => {
+    if (!link.section) {
+      e.preventDefault();
+      navigate(link.href);
+      setMobileOpen(false);
+      track('nav_click', { label: link.label });
+      return;
+    }
     if (path === '/') {
       e.preventDefault();
       document.querySelector(link.section)?.scrollIntoView({ behavior: 'smooth' });

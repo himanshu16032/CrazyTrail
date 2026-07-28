@@ -7,6 +7,17 @@ export default function Article() {
         Exploding Topics is genuinely one of the better trend tools out there. But at $39 a month, it&rsquo;s out of reach for most individual creators and small teams. The good news: a handful of free and low-cost alternatives give you the same early-trend advantage &mdash; and a few of them are built specifically for Instagram and YouTube creators rather than enterprise marketing teams. Here are the seven best, in the order I&rsquo;d actually pick them.
       </Intro>
 
+        <Callout tone="primary">
+          <P>
+            <Bold>A free Exploding Topics alternative</Bold> is any tool that surfaces early-stage trend signals without a paid subscription. For Instagram and YouTube creators, CrazyTrail is the closest free match because it is social-first and powered by{' '}
+            <a href="/topics/llm-video-trend-detection" className="text-primary font-semibold underline-offset-2 hover:underline">LLM video trend detection</a>
+            {' '}on short-form clips; Google Trends + Glimpse cover broader search-based discovery at $0. Also see{' '}
+            <a href="/topics/treendly-alternative-free" className="text-primary font-semibold underline-offset-2 hover:underline">Treendly alternative free</a>
+            {' '}and{' '}
+            <a href="/topics/glimpse-alternative-free" className="text-primary font-semibold underline-offset-2 hover:underline">Glimpse alternative free</a>.
+          </P>
+        </Callout>
+
       <Callout tone="amber">
         <P><Bold>Quick disclosure:</Bold> CrazyTrail is our tool. It&rsquo;s ranked #1 because it&rsquo;s purpose-built for the use case (creators on IG + YouTube) and it&rsquo;s free. Every other tool below is reviewed honestly, with the limitations stated up front. Pick whatever fits your workflow.</P>
       </Callout>
