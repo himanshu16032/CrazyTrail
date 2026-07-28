@@ -5,16 +5,23 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { useLocationPath } from './lib/router';
 import { trackPageView } from './lib/tracking';
+import { useSeo } from './lib/seo';
+import { homeJsonLd, OG_IMAGE, SITE_URL } from './lib/siteContent';
 
 const WhatWeProvide      = lazy(() => import('./components/WhatWeProvide'));
 const HowItWorks         = lazy(() => import('./components/HowItWorks'));
 const WhyCrazyTrail      = lazy(() => import('./components/WhyCrazyTrail'));
 const EngagementShowcase = lazy(() => import('./components/EngagementShowcase'));
+const FaqSection         = lazy(() => import('./components/FaqSection'));
 const SubmitForm         = lazy(() => import('./components/SubmitForm'));
 const Footer             = lazy(() => import('./components/Footer'));
 
 const BlogIndex          = lazy(() => import('./components/blog/BlogIndex'));
 const BlogPost           = lazy(() => import('./components/blog/BlogPost'));
+const TopicsIndex        = lazy(() => import('./components/topics/TopicsIndex'));
+const TopicPage          = lazy(() => import('./components/topics/TopicPage'));
+const MethodologyPage    = lazy(() => import('./components/Methodology'));
+const NotFoundPage       = lazy(() => import('./components/NotFoundPage'));
 
 function SectionFallback({ minH = 'min-h-[40vh]' }) {
   return (
@@ -25,6 +32,16 @@ function SectionFallback({ minH = 'min-h-[40vh]' }) {
 }
 
 function HomePage() {
+  useSeo({
+    title: 'CrazyTrail — AI Short Video Analysis for Reels & YouTube Shorts',
+    description: 'CrazyTrail uses short-video-specific LLMs to analyze hooks, formats, and velocity on Instagram Reels and YouTube Shorts — then alerts you 3–5 days before topics peak. Free for creators.',
+    canonical: `${SITE_URL}/`,
+    keywords: 'AI short video analysis, LLM video trend detection, YouTube Shorts trending topics, trending Instagram Reels, find trending topics before they blow up, early viral window, hashtag research for Reels',
+    ogImage: OG_IMAGE,
+    ogType: 'website',
+    jsonLd: homeJsonLd(),
+  });
+
   return (
     <>
       <Hero />
@@ -33,10 +50,25 @@ function HomePage() {
         <HowItWorks />
         <WhyCrazyTrail />
         <EngagementShowcase />
+        <FaqSection />
         <SubmitForm />
         <Footer />
       </Suspense>
     </>
+  );
+}
+
+function UnknownPage() {
+  useSeo({
+    title: 'Page not found · CrazyTrail',
+    description: 'This page does not exist on CrazyTrail.',
+    canonical: `${SITE_URL}/`,
+    noindex: true,
+  });
+  return (
+    <Suspense fallback={<SectionFallback minH="min-h-[60vh]" />}>
+      <NotFoundPage />
+    </Suspense>
   );
 }
 
@@ -46,11 +78,14 @@ export default function App() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       trackPageView({ path });
+      document.getElementById('seo-static')?.remove();
     }
   }, [path]);
 
   let view;
-  if (path === '/blog' || path === '/blog/') {
+  if (path === '/' || path === '') {
+    view = <HomePage />;
+  } else if (path === '/blog' || path === '/blog/') {
     view = (
       <Suspense fallback={<SectionFallback minH="min-h-[60vh]" />}>
         <BlogIndex />
@@ -63,8 +98,27 @@ export default function App() {
         <BlogPost slug={slug} />
       </Suspense>
     );
+  } else if (path === '/topics' || path === '/topics/') {
+    view = (
+      <Suspense fallback={<SectionFallback minH="min-h-[60vh]" />}>
+        <TopicsIndex />
+      </Suspense>
+    );
+  } else if (path.startsWith('/topics/')) {
+    const slug = path.replace(/^\/topics\//, '').replace(/\/$/, '');
+    view = (
+      <Suspense fallback={<SectionFallback minH="min-h-[60vh]" />}>
+        <TopicPage slug={slug} />
+      </Suspense>
+    );
+  } else if (path === '/methodology' || path === '/methodology/') {
+    view = (
+      <Suspense fallback={<SectionFallback minH="min-h-[60vh]" />}>
+        <MethodologyPage />
+      </Suspense>
+    );
   } else {
-    view = <HomePage />;
+    view = <UnknownPage />;
   }
 
   return (

@@ -6,25 +6,25 @@ const steps = [
   {
     icon: Monitor,
     title: 'Choose Platform',
-    desc: 'Pick your content type — YouTube Short, YouTube Video, Instagram Post, or Instagram Reel.',
+    desc: 'Pick YouTube Short, YouTube Video, Instagram Post, or Instagram Reel — analysis is short-form native.',
     color: 'bg-primary',
   },
   {
     icon: MessageSquareText,
-    title: 'Share Your Interests',
-    desc: 'Tell us your topics, hashtags, and optionally your channel link so we can personalize.',
+    title: 'Share Your Niche',
+    desc: 'Tell us topics and hashtags so the LLM scores rising clips that actually match your audience.',
     color: 'bg-accent-pink',
   },
   {
     icon: CalendarDays,
     title: 'Pick Your Month',
-    desc: 'Select the month you want trends for — plan weeks or months ahead.',
+    desc: 'Select the month you want trends for — plan inside the early viral window, not after peak.',
     color: 'bg-accent-orange',
   },
   {
     icon: Mail,
-    title: 'Get Results via Email',
-    desc: 'Our AI processes your request and delivers curated trends straight to your inbox.',
+    title: 'Get AI Alerts',
+    desc: 'Receive curated topics from short-video velocity analysis — hooks, formats, hashtags — in your inbox.',
     color: 'bg-accent-green',
   },
 ];
@@ -50,16 +50,15 @@ export default function HowItWorks() {
             How It <span className="text-primary">Works</span>
           </h2>
           <p className="text-dark-light text-lg max-w-2xl mx-auto">
-            Four simple steps to get personalized trending topics delivered to your inbox.
+            Four steps from niche to inbox — powered by short-video LLM analysis, not guesswork.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-8 md:gap-4 relative">
-          {/* connector line — desktop only */}
-          <div className="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary via-accent-pink to-accent-green" />
+        <ol className="grid md:grid-cols-4 gap-8 md:gap-4 relative list-none p-0 m-0">
+          <div className="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary via-accent-pink to-accent-green" aria-hidden="true" />
 
           {steps.map((step, i) => (
-            <motion.div
+            <motion.li
               key={step.title}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -67,20 +66,19 @@ export default function HowItWorks() {
               className="flex flex-col items-center text-center relative"
             >
               <div className={`relative z-10 w-16 h-16 ${step.color} rounded-2xl flex items-center justify-center shadow-lg mb-5`}>
-                <step.icon className="w-7 h-7 text-white" />
+                <step.icon className="w-7 h-7 text-white" aria-hidden="true" />
                 <span className="absolute -top-2 -right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center text-sm font-heading font-bold text-dark shadow">
                   {i + 1}
                 </span>
               </div>
-              {/* vertical connector on mobile */}
               {i < steps.length - 1 && (
-                <div className="md:hidden w-0.5 h-8 bg-gradient-to-b from-primary/30 to-primary/10 -mt-1 mb-1" />
+                <div className="md:hidden w-0.5 h-8 bg-gradient-to-b from-primary/30 to-primary/10 -mt-1 mb-1" aria-hidden="true" />
               )}
               <h3 className="font-heading font-bold text-lg text-dark mb-2">{step.title}</h3>
               <p className="text-dark-light text-sm leading-relaxed max-w-xs">{step.desc}</p>
-            </motion.div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

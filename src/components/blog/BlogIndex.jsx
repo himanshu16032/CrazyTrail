@@ -4,6 +4,7 @@ import { Calendar, Clock, ArrowUpRight, BookOpen } from 'lucide-react';
 import { POSTS } from './posts';
 import { Link } from '../../lib/router';
 import { useSeo } from '../../lib/seo';
+import { OG_IMAGE, SITE_URL } from '../../lib/siteContent';
 import { track } from '../../lib/tracking';
 
 const Footer = lazy(() => import('../Footer'));
@@ -13,21 +14,21 @@ export default function BlogIndex() {
     title: 'CrazyTrail Blog — Trend Discovery Guides for Creators',
     description: 'Practical guides for finding trending topics before they peak — written for Instagram and YouTube creators. Free tools, weekly Instagram trends, and timing playbooks.',
     keywords: 'crazytrail blog, content creator blog, trending topics guides, instagram trends blog, youtube trends, viral content, hashtag research',
-    canonical: 'https://www.crazytrail.com/blog',
-    ogImage: 'https://www.crazytrail.com/apple-touch-icon.svg',
+    canonical: `${SITE_URL}/blog`,
+    ogImage: OG_IMAGE,
     ogType: 'website',
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'Blog',
         name: 'CrazyTrail Blog',
-        url: 'https://www.crazytrail.com/blog',
+        url: `${SITE_URL}/blog`,
         description: 'Trend discovery guides, weekly Instagram trends, and free tool comparisons for content creators.',
         publisher: {
           '@type': 'Organization',
           name: 'CrazyTrail',
-          url: 'https://www.crazytrail.com',
-          logo: 'https://www.crazytrail.com/favicon.svg',
+          url: SITE_URL,
+          logo: `${SITE_URL}/favicon.svg`,
         },
         blogPost: POSTS.map((p) => ({
           '@type': 'BlogPosting',
@@ -35,7 +36,7 @@ export default function BlogIndex() {
           description: p.description,
           datePublished: p.publishedAt,
           dateModified: p.updatedAt,
-          url: `https://www.crazytrail.com/blog/${p.slug}`,
+          url: `${SITE_URL}/blog/${p.slug}`,
           author: { '@type': 'Organization', name: 'CrazyTrail' },
         })),
       },
@@ -43,8 +44,8 @@ export default function BlogIndex() {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.crazytrail.com/' },
-          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.crazytrail.com/blog' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
         ],
       },
     ],

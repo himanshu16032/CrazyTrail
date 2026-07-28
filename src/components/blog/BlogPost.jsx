@@ -4,8 +4,11 @@ import { Calendar, Clock, ArrowLeft, Send } from 'lucide-react';
 import { getPost, POSTS } from './posts';
 import { Link, navigate } from '../../lib/router';
 import { useSeo } from '../../lib/seo';
+import { OG_IMAGE, SITE_URL } from '../../lib/siteContent';
 import { track } from '../../lib/tracking';
 import GradientButton from '../ui/GradientButton';
+import Breadcrumbs from '../Breadcrumbs';
+import TrustBlock from '../TrustBlock';
 
 const Footer = lazy(() => import('../Footer'));
 
@@ -13,7 +16,7 @@ function NotFound() {
   useSeo({
     title: 'Article not found · CrazyTrail',
     description: 'The article you were looking for does not exist anymore.',
-    canonical: 'https://www.crazytrail.com/blog',
+    canonical: `${SITE_URL}/blog`,
   });
   return (
     <main className="pt-28 pb-20 bg-cream min-h-screen">
@@ -63,39 +66,69 @@ export default function BlogPost({ slug }) {
           title: post.titleTag,
           description: post.description,
           keywords: post.keywords,
-          canonical: `https://www.crazytrail.com/blog/${post.slug}`,
-          ogImage: 'https://www.crazytrail.com/apple-touch-icon.svg',
+          canonical: `${SITE_URL}/blog/${post.slug}`,
+          ogImage: OG_IMAGE,
           ogType: 'article',
           jsonLd: [
             {
               '@context': 'https://schema.org',
               '@type': 'Article',
-              headline: post.titleTag,
+              headline: post.h1,
               description: post.description,
-              image: 'https://www.crazytrail.com/apple-touch-icon.svg',
+              image: OG_IMAGE,
               datePublished: post.publishedAt + 'T09:00:00+05:30',
               dateModified: post.updatedAt + 'T09:00:00+05:30',
-              author: { '@type': 'Organization', name: 'CrazyTrail', url: 'https://www.crazytrail.com' },
+              author: { '@type': 'Organization', name: 'CrazyTrail', url: SITE_URL },
               publisher: {
                 '@type': 'Organization',
                 name: 'CrazyTrail',
-                logo: { '@type': 'ImageObject', url: 'https://www.crazytrail.com/favicon.svg' },
+                logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
               },
               mainEntityOfPage: {
                 '@type': 'WebPage',
-                '@id': `https://www.crazytrail.com/blog/${post.slug}`,
+                '@id': `${SITE_URL}/blog/${post.slug}`,
               },
               keywords: post.keywords,
+              about: post.primaryKeyword,
             },
             {
               '@context': 'https://schema.org',
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.crazytrail.com/' },
-                { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.crazytrail.com/blog' },
-                { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.crazytrail.com/blog/${post.slug}` },
+                { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+                { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+                { '@type': 'ListItem', position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
               ],
             },
+            ...(post.faq?.length
+              ? [
+                  {
+                    '@context': 'https://schema.org',
+                    '@type': 'FAQPage',
+                    mainEntity: post.faq.map((item) => ({
+                      '@type': 'Question',
+                      name: item.q,
+                      acceptedAnswer: { '@type': 'Answer', text: item.a },
+                    })),
+                  },
+                ]
+              : []),
+            ...(post.howTo
+              ? [
+                  {
+                    '@context': 'https://schema.org',
+                    '@type': 'HowTo',
+                    name: post.howTo.name,
+                    description: post.howTo.description,
+                    step: post.howTo.steps.map((s, i) => ({
+                      '@type': 'HowToStep',
+                      position: i + 1,
+                      name: s.name,
+                      text: s.text,
+                    })),
+                  },
+                ]
+              : []),
           ],
         }
       : { title: 'Article not found · CrazyTrail' }
@@ -107,6 +140,13 @@ export default function BlogPost({ slug }) {
     <>
       <article className="pt-24 pb-20 md:pt-28 md:pb-28 bg-cream min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: post.title },
+            ]}
+          />
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,6 +213,15 @@ export default function BlogPost({ slug }) {
               </div>
             </div>
           )}
+
+          <div className="mt-10 flex flex-wrap gap-2">
+            <Link to="/topics" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">Topic guides</Link>
+            <Link to="/topics/ai-short-video-analysis" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">AI short video analysis</Link>
+            <Link to="/methodology" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">Methodology</Link>
+            <Link to="/feed.xml" className="text-xs bg-white border border-gray-100 rounded-full px-3 py-1.5 text-dark-light hover:text-primary">RSS</Link>
+          </div>
+
+          <TrustBlock />
         </div>
       </article>
       <Suspense fallback={null}>

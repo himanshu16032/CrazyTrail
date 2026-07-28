@@ -7,6 +7,15 @@ export default function Article() {
         Two creators post about the exact same topic on the exact same day. One ends the week with 400 views. The other is sitting on 2.1 million. Same niche. Roughly the same follower count. The difference? Four days. The second creator caught the trend while it was still climbing &mdash; before Explore picked it up, before the bigger accounts noticed, before everyone else thought of the same idea. This is a guide on how to <Bold>find trending topics before they blow up</Bold>, so you can be that second creator.
       </Intro>
 
+        <Callout tone="primary">
+          <P>
+            <Bold>Finding trending topics before they blow up</Bold> means detecting a topic while it is still in the early 3&ndash;5 day window &mdash; after the first signals appear, but before mainstream creator feeds and Explore saturate it. Creators who post in that window get treated as fuel for the trend; creators who post at peak compete with thousands of identical clips. CrazyTrail does this with{' '}
+            <a href="/topics/ai-short-video-analysis" className="text-primary font-semibold underline-offset-2 hover:underline">AI short video analysis</a>
+            {' '}and{' '}
+            <a href="/methodology" className="text-primary font-semibold underline-offset-2 hover:underline">short-form LLM methodology</a>.
+          </P>
+        </Callout>
+
       <P>
         Here&rsquo;s the uncomfortable truth most growth posts dance around: by the time something feels &ldquo;trending,&rdquo; it has usually already finished trending. The biggest accounts, the algorithm, the comment sections &mdash; they&rsquo;re all reacting to a wave that crested 48 hours ago. You&rsquo;re not late because you&rsquo;re slow. You&rsquo;re late because the tools most people use are designed to confirm trends, not predict them.
       </P>

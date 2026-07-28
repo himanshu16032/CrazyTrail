@@ -9,7 +9,7 @@ export default function Article() {
 
       <Callout tone="amber">
         <P>
-          <Bold>This week&rsquo;s top trends &mdash; updated April 22, 2026.</Bold> Five trends below are still in the early window. The signals come from a mix of CrazyTrail velocity data and 4&ndash;5 hours of manual scanning across niches. If you want this same digest delivered to your inbox every Monday morning, <a href="/?ref=blog-weekly" className="text-primary font-semibold underline-offset-2 hover:underline">try CrazyTrail free</a>.
+          <Bold>This week&rsquo;s top trends &mdash; updated July 28, 2026.</Bold> Five trends below are still in the early window. Signals mix CrazyTrail short-video velocity with manual niche scanning. Want this in your inbox every Monday? <a href="/?ref=blog-weekly" className="text-primary font-semibold underline-offset-2 hover:underline">Try CrazyTrail free</a>. Also see <a href="/topics/free-viral-reels-ideas" className="text-primary font-semibold underline-offset-2 hover:underline">free viral Reels ideas</a>.
         </P>
       </Callout>
 
@@ -29,19 +29,19 @@ export default function Article() {
         <P>For each trend below: what it is, why it&rsquo;s rising, an angle you can adapt, and the realistic deadline before saturation kicks in.</P>
 
         <Callout tone="primary">
-          <P><Bold>1. &ldquo;The thing nobody told you about ____&rdquo; explainer Reels.</Bold> Niche: cross-niche. Why rising: three large lifestyle accounts have hit 1M+ in the past five days using this open. Angle: pick one specific frustration in your niche and structure the answer in three beats. Act by: <Bold>Thursday</Bold>.</P>
+          <P><Bold>1. &ldquo;I tested ___ so you don&rsquo;t have to&rdquo; proof Reels.</Bold> Niche: cross-niche. Why rising: mid-size creators hitting disproportionate saves with before/after proof in under 20s. Angle: one claim, one test, one verdict. Act by: <Bold>Thursday</Bold>.</P>
         </Callout>
         <Callout tone="green">
-          <P><Bold>2. &ldquo;Slow productivity&rdquo; mood content.</Bold> Niche: lifestyle, work, study. Why rising: counter-trend to hustle culture, gaining traction off a couple of viral threads on X. Angle: a 15-second clip of your version of slow productivity (a candle, a written list, a single task). Act by: <Bold>Friday</Bold>.</P>
+          <P><Bold>2. &ldquo;Soft life reset&rdquo; desk / room resets.</Bold> Niche: lifestyle, work, study. Why rising: counter to hustle edits; lo-fi audio + one habit change. Angle: 15s tidy + one rule you actually keep. Act by: <Bold>Friday</Bold>.</P>
         </Callout>
         <Callout tone="pink">
-          <P><Bold>3. Brutalist home decor.</Bold> Niche: home, interiors, fashion-adjacent. Why rising: spillover from Pinterest where it&rsquo;s been climbing for two weeks. Angle: a corner of your space that already leans this way + the one piece you&rsquo;d add. Act by: <Bold>Sunday</Bold>.</P>
+          <P><Bold>3. Warm metal / chrome-mix styling.</Bold> Niche: fashion, beauty, interiors-adjacent. Why rising: Pinterest spillover into Reels OOTD formats. Angle: two pieces you already own + one add. Act by: <Bold>Sunday</Bold>.</P>
         </Callout>
         <Callout tone="amber">
-          <P><Bold>4. &ldquo;Fasting-friendly snack&rdquo; alternatives.</Bold> Niche: fitness, health, food. Why rising: combined 4M views across three nutrition accounts in the last 72 hours. Angle: your single best swap, no fluff. Act by: <Bold>Wednesday</Bold>.</P>
+          <P><Bold>4. &ldquo;High-protein under 10 minutes&rdquo; swaps.</Bold> Niche: fitness, food. Why rising: combined multi-million views on quick meal swaps this week. Angle: one recipe, three beats, no fluff. Act by: <Bold>Wednesday</Bold>.</P>
         </Callout>
         <Callout tone="primary">
-          <P><Bold>5. &ldquo;You hired me &mdash; what would I actually tell you to stop doing&rdquo;</Bold> POV format. Niche: any service or expertise niche. Why rising: format gaining traction in fitness, finance, and design simultaneously. Angle: pick one common, specific mistake. Don&rsquo;t hedge. Act by: <Bold>Friday</Bold>.</P>
+          <P><Bold>5. &ldquo;If I were your ___ for a day&rdquo; expert POV.</Bold> Niche: coaching, finance, design, fitness. Why rising: format jumping niches with high comment intent. Angle: one specific mistake to stop. Act by: <Bold>Friday</Bold>.</P>
         </Callout>
       </Section>
 

@@ -64,7 +64,7 @@ export default function WhyCrazyTrail() {
             Why <span className="text-primary">CrazyTrail</span>?
           </h2>
           <p className="text-dark-light text-lg max-w-2xl mx-auto">
-            Great content with bad timing is wasted potential. We fix that.
+            Great short videos with bad timing still flop. Our LLM scores rising Reels and Shorts so you post inside the early window.
           </p>
         </motion.div>
 

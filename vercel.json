@@ -2,8 +2,31 @@
   "rewrites": [
     { "source": "/d/:id", "destination": "/api/d/:id" },
     {
-      "source": "/((?!api/.*|d/.*|favicon\\.svg|apple-touch-icon\\.svg|images/.*|sitemap\\.xml|robots\\.txt).*)",
+      "source": "/((?!api/.*|d/.*|favicon\\.svg|apple-touch-icon\\.svg|og-image\\.jpg|images/.*|sitemap.*\\.xml|robots\\.txt|llms\\.txt|ai\\.txt|feed\\.xml|google.*\\.html).*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/(llms\\.txt|ai\\.txt)",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/feed.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=1800" }
+      ]
     }
   ],
   "functions": {

@@ -51,10 +51,17 @@ export function useSeo({
   ogImage,
   ogType = 'website',
   jsonLd = [],
+  noindex = false,
 } = {}) {
   useEffect(() => {
     const previousTitle = document.title;
     if (title) document.title = title;
+
+    const hasQuery = typeof window !== 'undefined' && window.location.search.length > 1;
+    const robotsContent = noindex || hasQuery
+      ? 'noindex, follow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+    setMeta('meta[name="robots"]', { name: 'robots', content: robotsContent });
 
     if (description) {
       setMeta('meta[name="description"]', { name: 'description', content: description });
@@ -69,8 +76,9 @@ export function useSeo({
       setMeta('meta[name="keywords"]', { name: 'keywords', content: keywords });
     }
     if (canonical) {
-      setLink('canonical', canonical);
-      setMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
+      const cleanCanonical = canonical.split('?')[0];
+      setLink('canonical', cleanCanonical);
+      setMeta('meta[property="og:url"]', { property: 'og:url', content: cleanCanonical });
     }
     if (ogImage) {
       setMeta('meta[property="og:image"]', { property: 'og:image', content: ogImage });
@@ -84,5 +92,5 @@ export function useSeo({
       clearManaged();
       document.title = previousTitle;
     };
-  }, [title, description, canonical, keywords, ogImage, ogType, JSON.stringify(jsonLd)]);
+  }, [title, description, canonical, keywords, ogImage, ogType, noindex, JSON.stringify(jsonLd)]);
 }

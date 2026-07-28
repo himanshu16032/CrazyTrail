@@ -132,7 +132,7 @@ export default function Hero() {
           <motion.div initial="hidden" animate="visible" className="order-1 lg:order-none lg:col-start-1 lg:row-start-1 text-center lg:text-left">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 bg-primary/10 text-primary font-semibold px-4 py-2 rounded-full mb-6 text-sm">
               <TrendingUp className="w-4 h-4" />
-              Trend Discovery for Creators
+              Short-Video LLM Analysis for Creators
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="font-heading font-900 text-5xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
               <span className="text-dark drop-shadow-[0_2px_4px_rgba(45,43,85,0.15)]">Stop Guessing.</span>{' '}
@@ -148,11 +148,14 @@ export default function Hero() {
                 />
               </span>
             </motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-dark text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium">
-              Prepare your content <span className="text-primary font-bold">days before</span> a topic blows up. We find the right{' '}
-              <span className="text-accent-pink font-bold">keywords</span>,{' '}
-              <span className="text-accent-orange font-bold">hashtags</span>, and{' '}
-              <span className="text-accent-green font-bold">trends</span> so you can focus on creating amazing content.
+            <motion.p variants={fadeUp} custom={2} className="text-dark text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-4 leading-relaxed font-medium">
+              <strong className="text-dark">CrazyTrail</strong> uses short-video-specific AI to analyze Instagram Reels and YouTube Shorts — hooks, pacing, captions, and velocity — then surfaces topics <span className="text-primary font-bold">3–5 days before</span> they peak.
+            </motion.p>
+            <motion.p variants={fadeUp} custom={2.5} className="text-dark-light text-base md:text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+              Not another search chart. In-depth LLM reading of rising short videos so you get the right{' '}
+              <span className="text-accent-pink font-semibold">keywords</span>,{' '}
+              <span className="text-accent-orange font-semibold">hashtags</span>, and{' '}
+              <span className="text-accent-green font-semibold">formats</span> while the window is still open.
             </motion.p>
             <motion.div variants={fadeUp} custom={3} className="flex items-center justify-center lg:justify-start gap-3">
               <GradientButton onClick={() => {

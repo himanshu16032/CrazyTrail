@@ -1,33 +1,34 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { CalendarClock, Hash, PlayCircle, Sparkles } from 'lucide-react';
+import { Brain, Hash, PlayCircle, Gauge } from 'lucide-react';
+import { Link } from '../lib/router';
 
 const features = [
   {
-    icon: CalendarClock,
-    title: 'Upcoming Trending Topics',
-    description: 'Get curated topics for upcoming days and events in your niche before they go viral.',
+    icon: Brain,
+    title: 'LLM Analysis Per Rising Clip',
+    description: 'Short-video-specific models read hooks, pacing, captions, and format fingerprints on Reels and Shorts — not generic web search noise.',
     color: 'bg-primary/10',
     iconColor: 'text-primary',
   },
   {
-    icon: Hash,
-    title: 'Trending Hashtags',
-    description: 'Hand-picked hashtags that are about to explode, tailored for your content type.',
+    icon: Gauge,
+    title: 'Early Velocity Scoring',
+    description: 'Topics ranked by acceleration inside the 3–5 day viral window, with saturation guardrails so you skip late formats.',
     color: 'bg-accent-yellow/15',
     iconColor: 'text-accent-orange',
   },
   {
-    icon: PlayCircle,
-    title: 'Previous Blast-Off Videos',
-    description: 'See real examples of videos that blew up using similar topics and timing strategies.',
+    icon: Hash,
+    title: 'Rising Hashtags & Formats',
+    description: 'Mid-volume rising tags and reusable short-form containers paired to your niche — not 20M saturated vanity tags.',
     color: 'bg-accent-green/10',
     iconColor: 'text-accent-green',
   },
   {
-    icon: Sparkles,
-    title: 'Completely Free. No BS.',
-    description: 'No hidden fees, no premium tiers, no catch. Just pure value for creators like you.',
+    icon: PlayCircle,
+    title: 'Blast-Off Video Context',
+    description: 'See why similar short videos took off — timing and structure — so you can adapt the pattern the same day.',
     color: 'bg-accent-pink/10',
     iconColor: 'text-accent-pink',
   },
@@ -51,11 +52,12 @@ export default function WhatWeProvide() {
             What We Offer
           </span>
           <h2 className="font-heading font-900 text-3xl sm:text-4xl md:text-5xl text-dark mb-4">
-            Everything You Need to{' '}
-            <span className="text-primary">Trend</span>
+            Short-Video Intelligence,{' '}
+            <span className="text-primary">Not Another Trend Blog</span>
           </h2>
           <p className="text-dark-light text-lg max-w-2xl mx-auto">
-            We handle the research so you can focus solely on creating content that connects.
+            Proprietary LLM reading of rising Reels and Shorts — the signal Google and creators cannot get from recycled listicles.{' '}
+            <Link to="/methodology" className="text-primary font-semibold hover:underline">See the methodology</Link>.
           </p>
         </motion.div>
 
