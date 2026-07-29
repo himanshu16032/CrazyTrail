@@ -61,8 +61,7 @@ function HomePage() {
 function UnknownPage() {
   useSeo({
     title: 'Page not found · CrazyTrail',
-    description: 'This page does not exist on CrazyTrail.',
-    canonical: `${SITE_URL}/`,
+    description: 'This page does not exist on CrazyTrail. Browse topics, blog, or start free trend alerts.',
     noindex: true,
   });
   return (

@@ -1,4 +1,14 @@
 {
+  "redirects": [
+    { "source": "/newsroom", "destination": "/blog", "permanent": true },
+    { "source": "/newsroom/:path*", "destination": "/blog", "permanent": true },
+    { "source": "/marketplace", "destination": "/topics", "permanent": true },
+    { "source": "/marketplace/:path*", "destination": "/topics", "permanent": true },
+    { "source": "/register", "destination": "/?ref=register", "permanent": true },
+    { "source": "/register/:path*", "destination": "/?ref=register", "permanent": true },
+    { "source": "/help", "destination": "/#faq", "permanent": true },
+    { "source": "/help/:path*", "destination": "/#faq", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/d/:id", "destination": "/api/d/:id" },
     {
