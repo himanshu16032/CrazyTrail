@@ -79,6 +79,8 @@ export function useSeo({
       const cleanCanonical = canonical.split('?')[0];
       setLink('canonical', cleanCanonical);
       setMeta('meta[property="og:url"]', { property: 'og:url', content: cleanCanonical });
+    } else if (noindex) {
+      document.head.querySelectorAll(`link[rel="canonical"]`).forEach((el) => el.remove());
     }
     if (ogImage) {
       setMeta('meta[property="og:image"]', { property: 'og:image', content: ogImage });
