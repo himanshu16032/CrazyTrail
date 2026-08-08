@@ -1,11 +1,27 @@
+# Virlo module (CrazyTrail)
 
-  # Design Dummy Website
+```
+modules/virlo/
+├── frontend/   # Vite + React UI (served at /virlo)
+└── backend/    # FastAPI hexagonal API
+```
 
-  This is a code bundle for Design Dummy Website. The original project is available at https://www.figma.com/design/AqawUVDpdfgTnWLfr4n6dH/Design-Dummy-Website.
+## Frontend
 
-  ## Running the code
+```bash
+cd modules/virlo/frontend
+npm i
+npm run dev                 # http://localhost:5173
+npm run sync:crazytrail     # build base=/virlo/ → public/virlo/
+```
 
-  Run `npm i` to install the dependencies.
+## Backend
 
-  Run `npm run dev` to start the development server.
-  
+```bash
+cd modules/virlo/backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+API docs: http://localhost:8000/docs
