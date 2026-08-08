@@ -9,7 +9,9 @@
     "build": "vite build && node scripts/generate-seo.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "virlo:sync": "npm --prefix modules/virlo run sync:crazytrail"
+    "virlo:sync": "npm --prefix modules/virlo/frontend run sync:crazytrail",
+    "virlo:dev": "npm --prefix modules/virlo/frontend run dev",
+    "virlo:api": "cd modules/virlo/backend && (test -d .venv || python3 -m venv .venv) && .venv/bin/pip install -q -r requirements.txt && .venv/bin/uvicorn main:app --reload --port 8000"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",

@@ -30,3 +30,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Virlo module
+modules/virlo/backend/.venv/
+modules/virlo/backend/.env
+modules/virlo/frontend/dist/
+modules/virlo/frontend/node_modules/
