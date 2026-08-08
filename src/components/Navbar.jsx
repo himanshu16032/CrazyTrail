@@ -9,6 +9,7 @@ const sectionLinks = [
   { label: 'Home', href: '/#home', section: '#home' },
   { label: 'How It Works', href: '/#how-it-works', section: '#how-it-works' },
   { label: 'Topics', href: '/topics', section: null },
+  { label: 'Virlo', href: '/virlo/', section: null },
   { label: 'FAQ', href: '/#faq', section: '#faq' },
   { label: 'Get Started', href: '/#submit', section: '#submit' },
 ];
@@ -34,6 +35,14 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const goSection = (e, link) => {
+    // External / static submodule (Virlo) — full page load, not SPA navigate
+    if (link.href.startsWith('/virlo')) {
+      e.preventDefault();
+      setMobileOpen(false);
+      track('nav_click', { label: link.label });
+      window.location.assign(link.href);
+      return;
+    }
     if (!link.section) {
       e.preventDefault();
       navigate(link.href);

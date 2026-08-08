@@ -11,8 +11,11 @@
   ],
   "rewrites": [
     { "source": "/d/:id", "destination": "/api/d/:id" },
+    { "source": "/virlo", "destination": "/virlo/index.html" },
+    { "source": "/virlo/", "destination": "/virlo/index.html" },
+    { "source": "/virlo/:path*", "destination": "/virlo/index.html" },
     {
-      "source": "/((?!api/.*|d/.*|favicon\\.svg|apple-touch-icon\\.svg|og-image\\.jpg|images/.*|sitemap.*\\.xml|robots\\.txt|llms\\.txt|ai\\.txt|feed\\.xml|google.*\\.html).*)",
+      "source": "/((?!api/.*|d/.*|virlo(?:/.*)?|favicon\\.svg|apple-touch-icon\\.svg|og-image\\.jpg|images/.*|sitemap.*\\.xml|robots\\.txt|llms\\.txt|ai\\.txt|feed\\.xml|google.*\\.html).*)",
       "destination": "/index.html"
     }
   ],

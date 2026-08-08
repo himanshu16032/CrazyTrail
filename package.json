@@ -8,7 +8,8 @@
     "seo": "node scripts/generate-seo.mjs",
     "build": "vite build && node scripts/generate-seo.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "virlo:sync": "npm --prefix modules/virlo run sync:crazytrail"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
