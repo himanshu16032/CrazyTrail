@@ -18,8 +18,6 @@ import SolutionsPage from "./solutions/page";
 import SolutionDetailPage from "./solutions/[slug]/page";
 import ResourcesPage from "./resources/page";
 import ResourceDetailPage from "./resources/[slug]/page";
-import McpPage from "./mcp/page";
-import ApiPage from "./api/page";
 import MissionPage from "./our-mission/page";
 import BrandPage from "./brand/page";
 import GrantPage from "./grant-program/page";
@@ -52,8 +50,6 @@ export default function App() {
             <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/resources/:slug" element={<ResourceDetailPage />} />
-            <Route path="/mcp" element={<McpPage />} />
-            <Route path="/api" element={<ApiPage />} />
             <Route path="/our-mission" element={<MissionPage />} />
             <Route path="/brand" element={<BrandPage />} />
             <Route path="/grant-program" element={<GrantPage />} />

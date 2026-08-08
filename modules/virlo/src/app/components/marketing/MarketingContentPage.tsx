@@ -26,7 +26,7 @@ export function MarketingContentPage({
             className={`${btnRaised} text-sm px-6 py-3`}
             style={btnRaisedStyle}
           >
-            {content.ctaLabel ?? "Start for $0 »"}
+            {content.ctaLabel ?? "Get started »"}
           </Link>
         }
       />

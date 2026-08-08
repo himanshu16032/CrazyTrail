@@ -6,18 +6,14 @@ import {
   Radio,
   Layers,
   Megaphone,
-  Code2,
   Menu,
   X,
   Check,
   Zap,
   Globe,
-  Video,
   Shield,
   Clock,
 } from "lucide-react";
-
-// ─── Data ───────────────────────────────────────────────────────────────────
 
 const features = [
   {
@@ -25,7 +21,7 @@ const features = [
     name: "Orbit Search",
     tagline: "Discover trends before they explode",
     description:
-      "Real-time search across TikTok, YouTube Shorts, and Instagram Reels. Surface rising creators, trending sounds, and breakout niches before they hit mainstream attention.",
+      "Real-time search across short-form video. Surface rising creators, trending sounds, and breakout niches before they hit mainstream attention.",
     stats: [
       { label: "Videos indexed", value: "1.2B+" },
       { label: "Update frequency", value: "15 min" },
@@ -75,24 +71,12 @@ const features = [
       { label: "Countries covered", value: "180" },
     ],
   },
-  {
-    icon: Code2,
-    name: "MCP Server",
-    tagline: "Plug Virlo data into any AI agent",
-    description:
-      "First-class Model Context Protocol server. Connect Virlo's full data catalog to Claude, GPT, or any MCP-compatible agent. 200+ endpoints with full streaming support.",
-    stats: [
-      { label: "API endpoints", value: "200+" },
-      { label: "Avg. response", value: "120ms" },
-    ],
-  },
 ];
 
 const plans = [
   {
-    name: "Starter",
-    monthlyPrice: 49,
-    annualPrice: 34,
+    name: "Free",
+    monthlyPrice: 0,
     description: "Solo operators & freelancers",
     features: [
       "2,000 plan credits/month",
@@ -103,40 +87,24 @@ const plans = [
       "Meta Ads Library",
       "Excel / CSV / JSON exports",
     ],
-    cta: "Start for $0",
+    cta: "Get started",
     highlight: false,
   },
   {
     name: "Pro",
-    monthlyPrice: 199,
-    annualPrice: 139,
+    monthlyPrice: 5,
     description: "Growing agencies & teams",
     features: [
       "12,000 plan credits/month",
-      "Everything in Starter",
+      "Everything in Free",
       "3 Team Seats Included",
       "Slack, Discord & webhook alerts",
       "Zapier & n8n integrations",
       "Performing Meta Ads Library",
       "Priority support",
     ],
-    cta: "Start for $0",
+    cta: "Get started",
     highlight: true,
-  },
-  {
-    name: "Enterprise",
-    monthlyPrice: null,
-    annualPrice: null,
-    description: "Custom solutions for your team",
-    features: [
-      "Everything in Pro",
-      "Founder support",
-      "Custom integrations",
-      "Dedicated account manager",
-      "API access",
-    ],
-    cta: "Book a Demo",
-    highlight: false,
   },
 ];
 
@@ -148,48 +116,7 @@ const btnRaisedStyle = {
   boxShadow: "inset 0 1px rgba(255,255,255,0.25), 0 4px 12px rgba(66,133,244,0.28), 0 2px 4px rgba(0,0,0,0.08)",
 };
 
-const CODE = `import { VirloClient } from "@virlo/sdk";
-
-const virlo = new VirloClient({
-  apiKey: process.env.VIRLO_KEY,
-});
-
-// Discover trending creators in a niche
-const trending = await virlo.orbit.search({
-  query: "sustainable fashion",
-  platforms: ["tiktok", "reels"],
-  sortBy: "velocity",
-  limit: 20,
-});
-
-// Track a creator with alerts
-await virlo.tracking.add({
-  handle: "@maya_creates",
-  platform: "tiktok",
-  alerts: {
-    viewSpike: 2.0,
-    followerMilestone: true,
-  },
-});
-
-console.log(trending.creators[0]);
-// { handle: "@eco_threads", views: "4.2M", growth: "+280%" }`;
-
-// ─── Syntax-highlight helper (safe — no user input) ─────────────────────────
-function highlight(line: string): string {
-  return line
-    .replace(
-      /\b(import|from|const|await|async|return|true|false)\b/g,
-      '<span style="color:#1a73e8">$1</span>'
-    )
-    .replace(/"([^"]*)"/g, '<span style="color:#188038">"$1"</span>')
-    .replace(/(\/\/.*$)/g, '<span style="color:#9aa0a6">$1</span>')
-    .replace(/\b(\d+(\.\d+)?)\b/g, '<span style="color:#e37400">$1</span>');
-}
-
-// ─── Component ───────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const [annual, setAnnual] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
 
@@ -205,7 +132,6 @@ export default function HomePage() {
       className="bg-background text-foreground min-h-screen overflow-x-hidden"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      {/* ── NAV ─────────────────────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
@@ -226,8 +152,6 @@ export default function HomePage() {
                 { label: "Solutions", to: "/solutions" },
                 { label: "Resources", to: "/resources" },
                 { label: "Pricing", to: "/pricing" },
-                { label: "API", to: "/api" },
-                { label: "MCP", to: "/mcp" },
               ].map((item) => (
                 <Link
                   key={item.to}
@@ -257,7 +181,7 @@ export default function HomePage() {
               className={`${btnRaised} text-sm px-5 py-2`}
               style={btnRaisedStyle}
             >
-              Start for $0 »
+              Get started »
             </Link>
           </div>
           <button
@@ -274,8 +198,6 @@ export default function HomePage() {
               { label: "Solutions", to: "/solutions" },
               { label: "Resources", to: "/resources" },
               { label: "Pricing", to: "/pricing" },
-              { label: "API", to: "/api" },
-              { label: "MCP", to: "/mcp" },
             ].map((item) => (
               <Link
                 key={item.to}
@@ -293,13 +215,12 @@ export default function HomePage() {
               className={`${btnRaised} text-sm px-4 py-2.5 w-full`}
               style={btnRaisedStyle}
             >
-              Start for $0 »
+              Get started »
             </Link>
           </div>
         )}
       </nav>
 
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative pt-36 pb-24 px-6 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-primary/15 rounded-full blur-[130px] pointer-events-none" />
         <div className="absolute top-40 right-1/4 w-[280px] h-[280px] bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
@@ -321,7 +242,7 @@ export default function HomePage() {
                   "linear-gradient(135deg, #8ab4f8 0%, #4285f4 45%, #1a73e8 100%)",
               }}
             >
-              TikTok, Reels & Shorts
+              short-form video
             </span>
           </h1>
 
@@ -337,27 +258,12 @@ export default function HomePage() {
               className={`${btnRaised} w-full sm:w-auto text-base px-8 py-3.5`}
               style={btnRaisedStyle}
             >
-              Start a 7-day trial for $0 »
+              Get started »
             </Link>
-          </div>
-
-          <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <Video size={11} className="text-[#ea4335]" /> TikTok
-            </span>
-            <span className="w-px h-3 bg-border" />
-            <span className="flex items-center gap-1.5">
-              <Video size={11} className="text-[#4285f4]" /> YouTube Shorts
-            </span>
-            <span className="w-px h-3 bg-border" />
-            <span className="flex items-center gap-1.5">
-              <Video size={11} className="text-[#fbbc04]" /> Instagram Reels
-            </span>
           </div>
         </div>
       </section>
 
-      {/* ── TRUSTED BY ───────────────────────────────────────────────────── */}
       <section className="py-14 border-y border-border">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p
@@ -378,7 +284,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FEATURES ─────────────────────────────────────────────────────── */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -402,7 +307,6 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
-            {/* Selector */}
             <div className="flex flex-col gap-2">
               {features.map((f, i) => {
                 const Icon = f.icon;
@@ -427,7 +331,6 @@ export default function HomePage() {
               })}
             </div>
 
-            {/* Detail panel */}
             <div className="rounded-2xl border border-border bg-card p-8">
               <div className="flex items-center gap-3.5 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-primary/12 flex items-center justify-center flex-shrink-0">
@@ -471,9 +374,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PRICING ───────────────────────────────────────────────────────── */}
       <section className="py-24 px-6" id="pricing">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
             <div
               className="text-xs text-primary uppercase tracking-widest mb-3"
@@ -488,40 +390,11 @@ export default function HomePage() {
               Pick the plan that fits your operation
             </h2>
             <p className="text-muted-foreground">
-              Every plan includes the Content Research Agent, Tracking Center, and Content Studio.
+              Free and Pro. Everything is free during beta.
             </p>
-
-            {/* Billing toggle */}
-            <div className="flex items-center justify-center gap-3 mt-8">
-              <span className={`text-sm ${!annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Monthly
-              </span>
-              <button
-                onClick={() => setAnnual((a) => !a)}
-                className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-                  annual ? "bg-primary" : "bg-muted"
-                }`}
-                aria-label="Toggle annual billing"
-              >
-                <span
-                  className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                    annual ? "translate-x-6" : "translate-x-0"
-                  }`}
-                />
-              </button>
-              <span className={`text-sm ${annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Annual{" "}
-                <span
-                  className="text-primary text-xs ml-1"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  30% Off
-                </span>
-              </span>
-            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {plans.map((plan) => (
               <div
                 key={plan.name}
@@ -560,39 +433,21 @@ export default function HomePage() {
                 </div>
 
                 <div className="my-6">
-                  {plan.monthlyPrice ? (
-                    <>
-                      <div className="flex items-end gap-1">
-                        <span
-                          className="font-extrabold text-4xl text-foreground"
-                          style={{ fontFamily: "'Onest', sans-serif" }}
-                        >
-                          $0
-                        </span>
-                        <span className="text-muted-foreground text-sm mb-1.5">then</span>
-                        <span
-                          className="font-extrabold text-2xl text-foreground mb-0.5"
-                          style={{ fontFamily: "'Onest', sans-serif" }}
-                        >
-                          ${annual ? plan.annualPrice : plan.monthlyPrice}
-                        </span>
-                        <span className="text-muted-foreground text-sm mb-1.5">/mo</span>
-                      </div>
-                      <div
-                        className="text-xs text-muted-foreground mt-1"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        7-day free trial
-                      </div>
-                    </>
-                  ) : (
+                  <div className="flex items-end gap-1">
                     <span
                       className="font-extrabold text-4xl text-foreground"
                       style={{ fontFamily: "'Onest', sans-serif" }}
                     >
-                      Custom
+                      ${plan.monthlyPrice}
                     </span>
-                  )}
+                    <span className="text-muted-foreground text-sm mb-1.5">/mo</span>
+                  </div>
+                  <div
+                    className="text-xs text-muted-foreground mt-1"
+                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  >
+                    Free during beta
+                  </div>
                 </div>
 
                 <ul className="flex flex-col gap-3 mb-8 flex-1">
@@ -619,7 +474,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Trust line */}
           <div className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-muted-foreground">
             {[
               { icon: Shield, text: "SOC 2 Type II" },
@@ -634,89 +488,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── DEVELOPER ─────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 border-t border-border bg-card/15">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <div
-              className="text-xs text-accent uppercase tracking-widest mb-4"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              For developers
-            </div>
-            <h2
-              className="font-extrabold text-4xl text-foreground mb-6 leading-tight"
-              style={{ fontFamily: "'Onest', sans-serif" }}
-            >
-              Build on the world's largest
-              <br />
-              short-form video data API
-            </h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              200+ REST endpoints, full streaming support, and first-class MCP
-              server integration. Connect Virlo's data catalog to any AI agent
-              or workflow in minutes.
-            </p>
-
-            <ul className="flex flex-col gap-3 mb-10">
-              {[
-                "200+ API endpoints with OpenAPI spec",
-                "MCP Server for Claude, GPT, and any compatible agent",
-                "SDKs for Node.js, Python, and Go",
-                "Webhooks and real-time streaming support",
-                "99.9% uptime SLA with global edge caching",
-              ].map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <Check size={13} className="text-accent flex-shrink-0" /> {f}
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 text-sm bg-accent/10 text-accent border border-accent/20 px-5 py-2.5 rounded-xl hover:bg-accent/15 transition-colors">
-                <Code2 size={14} /> View API docs
-              </button>
-              <button className="flex items-center gap-2 text-sm text-muted-foreground px-5 py-2.5 rounded-xl hover:text-foreground transition-colors">
-                <Globe size={14} /> MCP Server guide
-              </button>
-            </div>
-          </div>
-
-          {/* Code block */}
-          <div className="rounded-2xl border border-border bg-background overflow-hidden">
-            <div className="h-10 border-b border-border bg-muted/20 flex items-center justify-between px-4">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                <div className="w-3 h-3 rounded-full bg-green-500/50" />
-              </div>
-              <span
-                className="text-xs text-muted-foreground"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                index.ts
-              </span>
-              <div className="w-20" />
-            </div>
-            <pre
-              className="p-6 text-xs leading-relaxed overflow-x-auto"
-              style={{ fontFamily: "'JetBrains Mono', monospace", color: "#9090b0" }}
-            >
-              <code>
-                {CODE.split("\n").map((line, i) => (
-                  <span
-                    key={i}
-                    className="block"
-                    dangerouslySetInnerHTML={{ __html: highlight(line) || "&nbsp;" }}
-                  />
-                ))}
-              </code>
-            </pre>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA BANNER ────────────────────────────────────────────────────── */}
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div
@@ -743,16 +514,15 @@ export default function HomePage() {
               Close the tabs, start tracking »
             </Link>
             <p className="text-xs text-muted-foreground mt-4 relative">
-              Starter plan from $49/mo. No long-term contracts.
+              Free during beta. Pro from $5/mo after launch.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
       <footer className="border-t border-border py-16 px-6 bg-card/10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-2">
               <div className="flex items-center gap-2.5 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
@@ -767,22 +537,18 @@ export default function HomePage() {
               </div>
               <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
                 The AI agent your content team's been missing. Social listening for
-                TikTok, Reels & Shorts.
+                short-form video.
               </p>
             </div>
 
             {[
               {
                 title: "Product",
-                links: ["Orbit Search", "Tracking Center", "Content Studio", "Meta Ads Intel", "MCP Server"],
+                links: ["Orbit Search", "Tracking Center", "Content Studio", "Meta Ads Intel"],
               },
               {
                 title: "Company",
                 links: ["About", "Blog", "Careers", "Press"],
-              },
-              {
-                title: "Developers",
-                links: ["API Reference", "SDKs", "MCP Guide", "Changelog", "Status"],
               },
             ].map((col) => (
               <div key={col.title}>

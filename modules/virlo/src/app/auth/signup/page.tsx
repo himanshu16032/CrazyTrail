@@ -48,9 +48,9 @@ export default function SignUpPage() {
                 className="font-bold text-xl"
                 style={{ fontFamily: "'Onest', sans-serif" }}
               >
-                Start for $0
+                Get started
               </h1>
-              <p className="text-sm text-muted-foreground">7-day trial · No card required</p>
+              <p className="text-sm text-muted-foreground">Free during beta · No card required</p>
             </div>
           </div>
 

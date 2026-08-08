@@ -22,7 +22,7 @@ const pages: MarketingPageContent[] = [
     title: "Everything you need to win at",
     highlight: "short-form video",
     description:
-      "Orbit Search, Tracking Center, Custom Niches, Content Studio, Meta Ads Library, and MCP — one research stack.",
+      "Orbit Search, Tracking Center, Custom Niches, Content Studio, and Meta Ads Library — one research stack.",
     cards: [
       {
         title: "Content Research Agent",
@@ -110,7 +110,7 @@ const pages: MarketingPageContent[] = [
       },
       {
         title: "Monday Drop",
-        body: "Weekly content intelligence system built on the Virlo API.",
+        body: "Weekly content intelligence system for short-form creators.",
         href: "/resources/monday-drop",
       },
       {
@@ -127,54 +127,6 @@ const pages: MarketingPageContent[] = [
         title: "Grant Program",
         body: "Apply for Virality Research Grant funding to study short-form ecosystems.",
         href: "/grant-program",
-      },
-    ],
-  },
-  {
-    slug: "mcp",
-    eyebrow: "MCP",
-    title: "Social intelligence",
-    highlight: "inside your AI tools",
-    description:
-      "Connect Claude, Cursor, and VS Code to Virlo via Model Context Protocol — same data, smarter workflows.",
-    ctaLabel: "View pricing »",
-    ctaTo: "/pricing",
-    cards: [
-      {
-        title: "36 tools. One config.",
-        body: "Analytics, Orbit, Comet, Satellite, and Tracking tools available to your agent.",
-      },
-      {
-        title: "Natural language",
-        body: "Ask for trending hooks in a niche — your agent calls Virlo instead of copy-pasting.",
-      },
-      {
-        title: "Same pricing as API",
-        body: "MCP uses pay-as-you-go credits. No surcharge for agent access.",
-      },
-    ],
-  },
-  {
-    slug: "api",
-    eyebrow: "API",
-    title: "Build on the largest",
-    highlight: "short-form data API",
-    description:
-      "200+ endpoints, streaming support, and first-class MCP. Wire Virlo into any workflow or agent.",
-    ctaLabel: "Start building »",
-    ctaTo: "/auth/signup",
-    cards: [
-      {
-        title: "Orbit Search API",
-        body: "Query TikTok, Reels, and Shorts with filters for velocity, niche, and recency.",
-      },
-      {
-        title: "Tracking webhooks",
-        body: "Subscribe to creator and hashtag spikes with sub-2-minute alert latency.",
-      },
-      {
-        title: "Exports & embeds",
-        body: "Pull JSON payloads or schedule stakeholder-ready CSV drops into your stack.",
       },
     ],
   },
@@ -274,7 +226,7 @@ const pages: MarketingPageContent[] = [
     cards: [
       { title: "Team channels", body: "Route niche spikes to the right Slack channel." },
       { title: "Automation", body: "Kick off Zapier/n8n flows when outliers appear." },
-      { title: "API hooks", body: "Custom webhooks for your internal tooling." },
+      { title: "Webhooks", body: "Custom webhooks for your internal tooling." },
     ],
   },
   {
@@ -286,7 +238,7 @@ const pages: MarketingPageContent[] = [
     cards: [
       { title: "One-click exports", body: "Pull Orbit and tracker tables into sheets instantly." },
       { title: "Scheduled drops", body: "Automate Monday client packs without manual copy." },
-      { title: "API parity", body: "Same fields available via REST for pipelines." },
+      { title: "Data exports", body: "Same fields available via CSV and JSON exports." },
     ],
   },
   {
@@ -332,7 +284,7 @@ const pages: MarketingPageContent[] = [
     highlight: "questions",
     description: "Credits, trials, refunds, and how Orbit Search consumes plan credits.",
     cards: [
-      { title: "Free trial", body: "Every paid plan starts with a 7-day trial for $0." },
+      { title: "Free during beta", body: "Everything is free while Virlo is in beta." },
       { title: "Credits", body: "Orbit Search uses 50 credits/run. Niche tracking scales by volume." },
       { title: "Refunds", body: "Contact support within the trial window for a full refund." },
     ],
@@ -341,10 +293,10 @@ const pages: MarketingPageContent[] = [
     slug: "resources/monday-drop",
     eyebrow: "Resources",
     title: "The Monday Drop",
-    description: "Weekly content intelligence system built on the Virlo API.",
+    description: "Weekly content intelligence system for short-form creators.",
     cards: [
       { title: "Weekly pulse", body: "Curated niches, hooks, and outliers every Monday." },
-      { title: "API powered", body: "Same endpoints your agents can call via MCP." },
+      { title: "Data powered", body: "Same research stack available across the product." },
       { title: "Actionable", body: "Each drop maps to briefs you can ship the same day." },
     ],
   },
@@ -380,7 +332,7 @@ const pages: MarketingPageContent[] = [
     ctaTo: "/auth/signup",
     cards: [
       { title: "Who can apply", body: "Researchers, labs, and independent analysts." },
-      { title: "What you get", body: "API credits, mentorship, and publication support." },
+      { title: "What you get", body: "Credits, mentorship, and publication support." },
       { title: "Focus areas", body: "Discovery windows, hooks, and cross-platform virality." },
     ],
   },

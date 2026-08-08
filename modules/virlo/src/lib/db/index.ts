@@ -53,13 +53,13 @@ const mockWorkspace: Workspace = {
   memberCount: 3,
 };
 
-/** Pricing plans mapped from `/pricing` blueprint (Starter $49 · Pro $199 · Enterprise custom). */
+/** Pricing plans — Free + Pro ($5/mo). Beta: everything free for now. */
 const mockPricingPlans: PricingPlan[] = [
   {
-    id: "plan_starter",
-    name: "Starter",
-    monthlyPrice: 49,
-    annualPrice: 34,
+    id: "plan_free",
+    name: "Free",
+    monthlyPrice: 0,
+    annualPrice: 0,
     credits: 2000,
     description: "Solo operators & freelancers",
     features: [
@@ -71,47 +71,27 @@ const mockPricingPlans: PricingPlan[] = [
       "Meta Ads Library",
       "Excel / CSV / JSON exports",
     ],
-    ctaLabel: "Start for $0",
-    trialDays: 7,
+    ctaLabel: "Get started",
     highlighted: false,
   },
   {
     id: "plan_pro",
     name: "Pro",
-    monthlyPrice: 199,
-    annualPrice: 139,
+    monthlyPrice: 5,
+    annualPrice: 5,
     credits: 12000,
     description: "Growing agencies & teams",
     features: [
       "12,000 plan credits/month",
-      "Everything in Starter",
+      "Everything in Free",
       "3 Team Seats Included",
       "Slack, Discord & webhook alerts",
       "Zapier & n8n integrations",
       "Performing Meta Ads Library",
       "Priority support",
     ],
-    ctaLabel: "Start for $0",
-    trialDays: 7,
+    ctaLabel: "Get started",
     highlighted: true,
-  },
-  {
-    id: "plan_enterprise",
-    name: "Enterprise",
-    monthlyPrice: null,
-    annualPrice: null,
-    credits: null,
-    description: "Custom solutions for your team",
-    features: [
-      "Everything in Pro",
-      "Founder support",
-      "Custom integrations",
-      "Dedicated account manager",
-      "API access",
-      "MCP server access",
-    ],
-    ctaLabel: "Book a Demo",
-    highlighted: false,
   },
 ];
 

@@ -52,7 +52,7 @@ export default function OrbitPage() {
         Discover trends before they <span style={{ color: BLUE }}>explode</span>
       </h1>
       <p className="text-[15px] mb-5 max-w-2xl" style={{ color: MUTED }}>
-        Real-time search across TikTok, YouTube Shorts, and Instagram Reels — powered by Orbit.
+        Real-time search across short-form video — powered by Orbit.
       </p>
 
       <form

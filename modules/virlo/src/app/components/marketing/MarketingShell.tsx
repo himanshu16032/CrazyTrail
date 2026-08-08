@@ -9,8 +9,6 @@ const NAV = [
   { label: "Solutions", to: "/solutions" },
   { label: "Resources", to: "/resources" },
   { label: "Pricing", to: "/pricing" },
-  { label: "API", to: "/api" },
-  { label: "MCP", to: "/mcp" },
 ];
 
 export function MarketingShell({
@@ -98,7 +96,7 @@ export function MarketingShell({
                       className={`${btnRaised} text-sm px-5 py-2`}
                       style={btnRaisedStyle}
                     >
-                      Start for $0 »
+                      Get started »
                     </Link>
                   </>
                 )}
@@ -133,7 +131,7 @@ export function MarketingShell({
                   className={`${btnRaised} text-sm px-4 py-2.5 w-full text-center`}
                   style={btnRaisedStyle}
                 >
-                  Start for $0 »
+                  Get started »
                 </Link>
               </div>
             )}
