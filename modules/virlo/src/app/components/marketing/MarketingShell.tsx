@@ -1,8 +1,12 @@
 import { Link, NavLink } from "react-router";
 import { Menu, X, Zap } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { btnRaised, btnRaisedStyle } from "@/app/components/product/theme";
+import {
+  btnRaised,
+  btnRaisedStyle,
+  marketingGlow,
+} from "@/app/components/product/theme";
 
 const NAV = [
   { label: "Features", to: "/features" },
@@ -21,7 +25,15 @@ export function MarketingShell({
   bare?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div
@@ -31,30 +43,46 @@ export function MarketingShell({
       {!bare && (
         <>
           <div
-            className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full"
-            style={{ background: "rgba(66,133,244,0.14)", filter: "blur(120px)" }}
+            className="pointer-events-none fixed inset-x-0 top-0 h-[520px] z-0"
+            style={{ background: marketingGlow }}
           />
-          <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/60 bg-white/80 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <nav
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+              scrolled
+                ? "border-b border-[rgba(60,64,67,0.08)] bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgba(60,64,67,0.04)]"
+                : "border-b border-transparent bg-white/70 backdrop-blur-md"
+            }`}
+          >
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
               <div className="flex items-center gap-8">
-                <Link to="/" className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+                <Link to="/" className="flex items-center gap-2.5 group">
+                  <div
+                    className="w-7 h-7 rounded-[9px] flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105"
+                    style={{
+                      background: "linear-gradient(145deg, #5a9bff, #1a73e8)",
+                      boxShadow: "0 4px 12px rgba(66,133,244,0.35)",
+                    }}
+                  >
                     <Zap size={13} className="text-white" />
                   </div>
                   <span
-                    className="font-extrabold text-lg tracking-tight"
+                    className="font-extrabold text-[17px] tracking-tight text-[#202124]"
                     style={{ fontFamily: "'Onest', sans-serif" }}
                   >
                     virlo
                   </span>
                 </Link>
-                <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+                <div className="hidden lg:flex items-center gap-1 text-[13.5px] text-[#5f6368]">
                   {NAV.map((item) => (
                     <NavLink
                       key={item.to}
                       to={item.to}
                       className={({ isActive }) =>
-                        `hover:text-foreground transition-colors ${isActive ? "text-foreground font-medium" : ""}`
+                        `px-3 py-1.5 rounded-full transition-colors duration-150 ${
+                          isActive
+                            ? 'text-[#202124] font-medium bg-[#e8f0fe]'
+                            : 'hover:text-[#202124] hover:bg-[#f1f3f4]'
+                        }`
                       }
                     >
                       {item.label}
@@ -62,19 +90,19 @@ export function MarketingShell({
                   ))}
                 </div>
               </div>
-              <div className="hidden md:flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-3">
                 {isAuthenticated ? (
                   <>
                     <Link
                       to="/dashboard"
-                      className="text-sm text-muted-foreground hover:text-foreground"
+                      className="text-[13.5px] text-[#5f6368] hover:text-[#202124] px-2 transition-colors"
                     >
                       Dashboard
                     </Link>
                     <button
                       type="button"
                       onClick={() => logout()}
-                      className="text-sm text-muted-foreground hover:text-foreground"
+                      className="text-[13.5px] text-[#5f6368] hover:text-[#202124] px-2 transition-colors"
                     >
                       Sign out{user?.firstName ? ` (${user.firstName})` : ""}
                     </button>
@@ -82,20 +110,14 @@ export function MarketingShell({
                 ) : (
                   <>
                     <Link
-                      to="/dashboard"
-                      className="text-sm text-muted-foreground hover:text-foreground"
-                    >
-                      Try Dashboard
-                    </Link>
-                    <Link
                       to="/auth/signin"
-                      className="text-sm text-muted-foreground hover:text-foreground"
+                      className="text-[13.5px] text-[#5f6368] hover:text-[#202124] px-3 py-2 transition-colors"
                     >
                       Sign in
                     </Link>
                     <Link
                       to="/auth/signup"
-                      className={`${btnRaised} text-sm px-5 py-2`}
+                      className={`${btnRaised} text-[13px] px-5 py-2`}
                       style={btnRaisedStyle}
                     >
                       Start for $0 »
@@ -105,7 +127,7 @@ export function MarketingShell({
               </div>
               <button
                 type="button"
-                className="md:hidden text-muted-foreground"
+                className="md:hidden text-[#5f6368] p-2 rounded-full hover:bg-[#f1f3f4]"
                 onClick={() => setOpen((v) => !v)}
                 aria-label="Toggle menu"
               >
@@ -113,24 +135,29 @@ export function MarketingShell({
               </button>
             </div>
             {open && (
-              <div className="md:hidden border-t border-border bg-white/95 backdrop-blur-md px-6 py-5 flex flex-col gap-4">
+              <div className="md:hidden border-t border-[rgba(60,64,67,0.08)] bg-white/95 backdrop-blur-xl px-5 py-5 flex flex-col gap-1 animate-in fade-in">
                 {NAV.map((item) => (
                   <Link
                     key={item.to}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className="text-sm text-muted-foreground"
+                    className="text-sm text-[#5f6368] hover:text-[#202124] px-3 py-2.5 rounded-xl hover:bg-[#f8f9fa]"
                   >
                     {item.label}
                   </Link>
                 ))}
-                <Link to="/auth/signin" onClick={() => setOpen(false)} className="text-sm">
+                <div className="h-px bg-[rgba(60,64,67,0.08)] my-2" />
+                <Link
+                  to="/auth/signin"
+                  onClick={() => setOpen(false)}
+                  className="text-sm px-3 py-2.5"
+                >
                   Sign in
                 </Link>
                 <Link
                   to="/auth/signup"
                   onClick={() => setOpen(false)}
-                  className={`${btnRaised} text-sm px-4 py-2.5 w-full text-center`}
+                  className={`${btnRaised} text-sm px-4 py-2.5 w-full text-center mt-1`}
                   style={btnRaisedStyle}
                 >
                   Start for $0 »
@@ -159,25 +186,29 @@ export function MarketingHero({
   cta?: ReactNode;
 }) {
   return (
-    <section className="relative pt-20 pb-16 px-6 overflow-hidden">
+    <section className="relative pt-20 sm:pt-24 pb-16 px-6 overflow-hidden">
       <div
-        className="absolute top-10 left-1/2 -translate-x-1/2 w-[720px] h-[360px] rounded-full pointer-events-none"
-        style={{ background: "rgba(66,133,244,0.16)", filter: "blur(110px)" }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(920px,100%)] h-[420px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(66,133,244,0.2) 0%, rgba(138,180,248,0.08) 45%, transparent 70%)",
+          filter: "blur(8px)",
+        }}
       />
-      <div className="max-w-4xl mx-auto text-center relative z-10">
+      <div className="max-w-3xl mx-auto text-center relative z-10">
         {eyebrow ? (
           <div
-            className="text-xs text-primary uppercase tracking-widest mb-4"
+            className="inline-flex items-center text-[11px] font-medium text-[#4285f4] uppercase tracking-[0.18em] mb-5"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
             {eyebrow}
           </div>
         ) : null}
         <h1
-          className="font-extrabold leading-[1.08] tracking-tight mb-5"
+          className="font-extrabold leading-[1.08] tracking-[-0.03em] mb-5 text-[#202124]"
           style={{
             fontFamily: "'Onest', sans-serif",
-            fontSize: "clamp(2.2rem, 5vw, 3.6rem)",
+            fontSize: "clamp(2.35rem, 5.5vw, 3.75rem)",
           }}
         >
           {title}
@@ -188,7 +219,7 @@ export function MarketingHero({
                 className="bg-clip-text text-transparent"
                 style={{
                   backgroundImage:
-                    "linear-gradient(135deg, #8ab4f8 0%, #4285f4 45%, #1a73e8 100%)",
+                    "linear-gradient(135deg, #8ab4f8 0%, #4285f4 48%, #1a73e8 100%)",
                 }}
               >
                 {highlight}
@@ -196,7 +227,7 @@ export function MarketingHero({
             </>
           ) : null}
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="text-[17px] text-[#5f6368] max-w-xl mx-auto mb-9 leading-relaxed">
           {description}
         </p>
         {cta}
@@ -214,7 +245,22 @@ export function GlassCard({
 }) {
   return (
     <div
-      className={`rounded-2xl border border-white/60 bg-white/80 backdrop-blur-md p-6 shadow-[0_12px_40px_rgba(66,133,244,0.08)] ${className}`}
+      className={`group rounded-[20px] border border-[rgba(60,64,67,0.08)] bg-white/90 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-1 ${className}`}
+      style={{
+        boxShadow:
+          "0 1px 2px rgba(60,64,67,0.04), 0 12px 32px rgba(66,133,244,0.07)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function SectionEyebrow({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className="text-[11px] font-medium text-[#4285f4] uppercase tracking-[0.18em] mb-3"
+      style={{ fontFamily: "'JetBrains Mono', monospace" }}
     >
       {children}
     </div>

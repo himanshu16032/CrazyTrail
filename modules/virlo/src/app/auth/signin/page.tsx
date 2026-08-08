@@ -37,8 +37,8 @@ export default function SignInPage() {
 
   return (
     <MarketingShell>
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 py-16">
-        <GlassCard className="w-full max-w-md">
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-5 sm:px-6 py-16 relative">
+        <GlassCard className="w-full max-w-md !p-8 sm:!p-9 shadow-[0_24px_64px_rgba(66,133,244,0.12)]">
           <div className="flex items-center gap-2.5 mb-6">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Zap size={14} className="text-white" />

@@ -23,7 +23,7 @@ export function MarketingContentPage({
         cta={
           <Link
             to={content.ctaTo ?? "/auth/signup"}
-            className={`${btnRaised} text-sm px-6 py-3`}
+            className={`${btnRaised} text-sm px-7 py-3`}
             style={btnRaisedStyle}
           >
             {content.ctaLabel ?? "Start for $0 »"}
@@ -31,23 +31,35 @@ export function MarketingContentPage({
         }
       />
 
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-28">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {content.cards.map((card) => (
-            <GlassCard key={card.title} className="flex flex-col gap-3">
+          {content.cards.map((card, i) => (
+            <GlassCard
+              key={card.title}
+              className="flex flex-col gap-3 min-h-[180px]"
+            >
+              <div
+                className="w-8 h-8 rounded-xl flex items-center justify-center text-[12px] font-semibold text-[#4285f4]"
+                style={{
+                  background: "rgba(66,133,244,0.1)",
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </div>
               <h2
-                className="font-semibold text-lg"
+                className="font-semibold text-[17px] text-[#202124] tracking-tight"
                 style={{ fontFamily: "'Onest', sans-serif" }}
               >
                 {card.title}
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+              <p className="text-[14px] text-[#5f6368] leading-relaxed flex-1">
                 {card.body}
               </p>
               {card.href ? (
                 <Link
                   to={card.href}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#1a73e8] group-hover:gap-2 transition-all"
                 >
                   Explore <ArrowRight size={14} />
                 </Link>
@@ -66,10 +78,13 @@ export function MarketingPageBySlug({ slug }: { slug: string }) {
     return (
       <MarketingShell>
         <div className="max-w-xl mx-auto px-6 py-32 text-center">
-          <h1 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Onest', sans-serif" }}>
+          <h1
+            className="text-3xl font-bold mb-3 text-[#202124]"
+            style={{ fontFamily: "'Onest', sans-serif" }}
+          >
             Page not found
           </h1>
-          <p className="text-muted-foreground mb-6">
+          <p className="text-[#5f6368] mb-6">
             This route isn’t in the current blueprint module.
           </p>
           <Link to="/" className={`${btnRaised} text-sm px-5 py-2.5`} style={btnRaisedStyle}>

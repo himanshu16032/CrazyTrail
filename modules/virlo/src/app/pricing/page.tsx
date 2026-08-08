@@ -1,14 +1,34 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Check, Clock, Globe, Shield } from "lucide-react";
+import { Clock, Globe, Shield } from "lucide-react";
 import type { PricingPlan } from "@/types/schema";
 import { getPricingPlans } from "@/lib/db";
-import { MarketingShell } from "../components/marketing/MarketingShell";
-import { btnRaised, btnRaisedStyle } from "../components/product/theme";
+import {
+  MarketingShell,
+  SectionEyebrow,
+} from "../components/marketing/MarketingShell";
+import {
+  BillingToggle,
+  PricingCards,
+  type HomePlan,
+} from "../components/marketing/PricingCards";
 import { PageSpinner } from "../components/product/ui";
 
+function toHomePlan(plan: PricingPlan): HomePlan {
+  return {
+    name: plan.name,
+    monthlyPrice: plan.monthlyPrice,
+    annualPrice: plan.annualPrice ?? null,
+    description: plan.description ?? "",
+    features: plan.features,
+    cta: plan.ctaLabel,
+    highlight: Boolean(plan.highlighted),
+    credits: plan.credits,
+  };
+}
+
 export default function PricingPage() {
-  const [plans, setPlans] = useState<PricingPlan[]>([]);
+  const [plans, setPlans] = useState<HomePlan[]>([]);
   const [annual, setAnnual] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +39,7 @@ export default function PricingPage() {
     getPricingPlans()
       .then((data) => {
         if (!cancelled) {
-          setPlans(data);
+          setPlans(data.map(toHomePlan));
           setLoading(false);
         }
       })
@@ -34,174 +54,59 @@ export default function PricingPage() {
 
   return (
     <MarketingShell>
-      <section className="pt-12 pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <div
-              className="text-xs text-primary uppercase tracking-widest mb-3"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              Pricing
-            </div>
+      <section className="relative pt-16 sm:pt-20 pb-28 px-5 sm:px-6 overflow-hidden">
+        <div
+          className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[min(980px,120%)] h-[480px]"
+          style={{
+            background:
+              "radial-gradient(ellipse 65% 55% at 50% 35%, rgba(66,133,244,0.22) 0%, rgba(138,180,248,0.1) 38%, transparent 70%)",
+          }}
+        />
+
+        <div className="max-w-[1080px] mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-14">
+            <SectionEyebrow>Pricing</SectionEyebrow>
             <h1
-              className="font-extrabold text-4xl md:text-5xl text-foreground mb-4"
-              style={{ fontFamily: "'Onest', sans-serif" }}
+              className="font-extrabold text-[#202124] tracking-[-0.03em] leading-[1.08] mb-4"
+              style={{
+                fontFamily: "'Onest', sans-serif",
+                fontSize: "clamp(2.4rem, 5vw, 3.35rem)",
+              }}
             >
               Data that pays for itself.
             </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-[#5f6368] text-[16px] sm:text-[17px] max-w-lg mx-auto leading-relaxed">
               Every plan includes Custom Niches, Orbit Search, the Content Studio, and data
               exports.
             </p>
-
-            <div className="flex items-center justify-center gap-3 mt-8">
-              <span className={`text-sm ${!annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Monthly
-              </span>
-              <button
-                type="button"
-                onClick={() => setAnnual((a) => !a)}
-                className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-                  annual ? "bg-primary" : "bg-muted"
-                }`}
-                aria-label="Toggle annual billing"
-              >
-                <span
-                  className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                    annual ? "translate-x-6" : "translate-x-0"
-                  }`}
-                />
-              </button>
-              <span className={`text-sm ${annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Annual{" "}
-                <span
-                  className="text-primary text-xs ml-1"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  30% Off
-                </span>
-              </span>
-            </div>
+            <BillingToggle annual={annual} onChange={setAnnual} />
           </div>
 
           {loading ? (
             <PageSpinner label="Loading plans…" />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {plans.map((plan) => (
-                <div
-                  key={plan.id}
-                  className={`rounded-2xl border p-8 flex flex-col relative overflow-hidden backdrop-blur-md ${
-                    plan.highlighted
-                      ? "border-primary/50 bg-primary/5"
-                      : "border-white/60 bg-white/80"
-                  }`}
-                >
-                  {plan.highlighted && (
-                    <>
-                      <div
-                        className="absolute top-0 left-0 right-0 h-px"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, transparent, #4285f4, transparent)",
-                        }}
-                      />
-                      <div
-                        className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-primary text-primary-foreground px-3 py-0.5 rounded-full"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        Most Popular
-                      </div>
-                    </>
-                  )}
-
-                  <div className="mb-2">
-                    <h2
-                      className="font-bold text-xl text-foreground"
-                      style={{ fontFamily: "'Onest', sans-serif" }}
-                    >
-                      {plan.name}
-                    </h2>
-                    <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
-                  </div>
-
-                  <div className="my-6">
-                    {plan.monthlyPrice != null ? (
-                      <>
-                        <div className="flex items-end gap-1">
-                          <span
-                            className="font-extrabold text-4xl text-foreground"
-                            style={{ fontFamily: "'Onest', sans-serif" }}
-                          >
-                            $0
-                          </span>
-                          <span className="text-muted-foreground text-sm mb-1.5">then</span>
-                          <span
-                            className="font-extrabold text-2xl text-foreground mb-0.5"
-                            style={{ fontFamily: "'Onest', sans-serif" }}
-                          >
-                            $
-                            {annual
-                              ? (plan.annualPrice ?? plan.monthlyPrice)
-                              : plan.monthlyPrice}
-                          </span>
-                          <span className="text-muted-foreground text-sm mb-1.5">/mo</span>
-                        </div>
-                        <div
-                          className="text-xs text-muted-foreground mt-1"
-                          style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                        >
-                          {plan.trialDays ?? 7}-day free trial
-                          {plan.credits != null
-                            ? ` · ${plan.credits.toLocaleString()} credits`
-                            : ""}
-                        </div>
-                      </>
-                    ) : (
-                      <span
-                        className="font-extrabold text-4xl text-foreground"
-                        style={{ fontFamily: "'Onest', sans-serif" }}
-                      >
-                        Custom
-                      </span>
-                    )}
-                  </div>
-
-                  <ul className="flex flex-col gap-3 mb-8 flex-1">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-sm text-muted-foreground">
-                        <Check size={13} className="text-primary flex-shrink-0 mt-0.5" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    to="/auth/signup"
-                    className={
-                      plan.highlighted
-                        ? `${btnRaised} w-full py-3 text-sm`
-                        : "w-full py-3 rounded-full font-medium text-sm border border-border hover:bg-muted/30 text-foreground transition-all text-center"
-                    }
-                    style={plan.highlighted ? btnRaisedStyle : undefined}
-                  >
-                    {plan.ctaLabel}
-                  </Link>
-                </div>
-              ))}
-            </div>
+            <PricingCards plans={plans} annual={annual} ctaTo="/auth/signup" />
           )}
 
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-14 text-[12px] text-[#80868b]">
             {[
               { icon: Shield, text: "SOC 2 Type II" },
               { icon: Clock, text: "99.9% uptime SLA" },
               { icon: Globe, text: "Global CDN" },
             ].map(({ icon: Icon, text }) => (
-              <span key={text} className="flex items-center gap-1.5">
-                <Icon size={12} className="text-primary" /> {text}
+              <span key={text} className="inline-flex items-center gap-1.5">
+                <Icon size={13} className="text-[#4285f4]" /> {text}
               </span>
             ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <p className="text-[#5f6368] text-sm mb-4">
+              Prefer to explore first?{" "}
+              <Link to="/features" className="text-[#1a73e8] font-medium hover:underline">
+                Browse the full platform
+              </Link>
+            </p>
           </div>
         </div>
       </section>

@@ -16,6 +16,7 @@ import {
   Shield,
   Clock,
 } from "lucide-react";
+import { BillingToggle, PricingCards } from "./components/marketing/PricingCards";
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 
@@ -206,7 +207,7 @@ export default function HomePage() {
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(60,64,67,0.08)] bg-white/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2.5">
@@ -301,8 +302,13 @@ export default function HomePage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative pt-36 pb-24 px-6 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-primary/15 rounded-full blur-[130px] pointer-events-none" />
-        <div className="absolute top-40 right-1/4 w-[280px] h-[280px] bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(980px,120%)] h-[520px] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 55% at 50% 30%, rgba(66,133,244,0.22) 0%, rgba(138,180,248,0.08) 42%, transparent 70%)",
+          }}
+        />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1
@@ -472,152 +478,46 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ───────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6" id="pricing">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
+      <section className="relative py-24 px-5 sm:px-6 overflow-hidden" id="pricing">
+        <div
+          className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 w-[min(980px,120%)] h-[420px]"
+          style={{
+            background:
+              "radial-gradient(ellipse 65% 55% at 50% 35%, rgba(66,133,244,0.2) 0%, rgba(138,180,248,0.08) 40%, transparent 70%)",
+          }}
+        />
+        <div className="max-w-[1080px] mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-14">
             <div
-              className="text-xs text-primary uppercase tracking-widest mb-3"
+              className="text-[11px] font-medium text-[#4285f4] uppercase tracking-[0.18em] mb-3"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
               Pricing
             </div>
             <h2
-              className="font-extrabold text-4xl md:text-5xl text-foreground mb-4"
-              style={{ fontFamily: "'Onest', sans-serif" }}
+              className="font-extrabold text-[#202124] tracking-[-0.03em] leading-[1.08] mb-4"
+              style={{
+                fontFamily: "'Onest', sans-serif",
+                fontSize: "clamp(2.2rem, 4.5vw, 3.1rem)",
+              }}
             >
               Pick the plan that fits your operation
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-[#5f6368] text-[16px] max-w-lg mx-auto leading-relaxed">
               Every plan includes the Content Research Agent, Tracking Center, and Content Studio.
             </p>
-
-            {/* Billing toggle */}
-            <div className="flex items-center justify-center gap-3 mt-8">
-              <span className={`text-sm ${!annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Monthly
-              </span>
-              <button
-                onClick={() => setAnnual((a) => !a)}
-                className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-                  annual ? "bg-primary" : "bg-muted"
-                }`}
-                aria-label="Toggle annual billing"
-              >
-                <span
-                  className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                    annual ? "translate-x-6" : "translate-x-0"
-                  }`}
-                />
-              </button>
-              <span className={`text-sm ${annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Annual{" "}
-                <span
-                  className="text-primary text-xs ml-1"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  30% Off
-                </span>
-              </span>
-            </div>
+            <BillingToggle annual={annual} onChange={setAnnual} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-2xl border p-8 flex flex-col relative overflow-hidden ${
-                  plan.highlight
-                    ? "border-primary/50 bg-primary/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                {plan.highlight && (
-                  <>
-                    <div
-                      className="absolute top-0 left-0 right-0 h-px"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent, #4285f4, transparent)",
-                      }}
-                    />
-                    <div
-                      className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-primary text-primary-foreground px-3 py-0.5 rounded-full"
-                      style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                    >
-                      Most Popular
-                    </div>
-                  </>
-                )}
-
-                <div className="mb-2">
-                  <h3
-                    className="font-bold text-xl text-foreground"
-                    style={{ fontFamily: "'Onest', sans-serif" }}
-                  >
-                    {plan.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
-                </div>
-
-                <div className="my-6">
-                  {plan.monthlyPrice ? (
-                    <>
-                      <div className="flex items-end gap-1">
-                        <span
-                          className="font-extrabold text-4xl text-foreground"
-                          style={{ fontFamily: "'Onest', sans-serif" }}
-                        >
-                          $0
-                        </span>
-                        <span className="text-muted-foreground text-sm mb-1.5">then</span>
-                        <span
-                          className="font-extrabold text-2xl text-foreground mb-0.5"
-                          style={{ fontFamily: "'Onest', sans-serif" }}
-                        >
-                          ${annual ? plan.annualPrice : plan.monthlyPrice}
-                        </span>
-                        <span className="text-muted-foreground text-sm mb-1.5">/mo</span>
-                      </div>
-                      <div
-                        className="text-xs text-muted-foreground mt-1"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        7-day free trial
-                      </div>
-                    </>
-                  ) : (
-                    <span
-                      className="font-extrabold text-4xl text-foreground"
-                      style={{ fontFamily: "'Onest', sans-serif" }}
-                    >
-                      Custom
-                    </span>
-                  )}
-                </div>
-
-                <ul className="flex flex-col gap-3 mb-8 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <Check size={13} className="text-primary flex-shrink-0 mt-0.5" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  to="/dashboard"
-                  className={
-                    plan.highlight
-                      ? `${btnRaised} w-full py-3 text-sm`
-                      : "w-full py-3 rounded-full font-medium text-sm border border-border hover:bg-muted/30 text-foreground transition-all text-center"
-                  }
-                  style={plan.highlight ? btnRaisedStyle : undefined}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
+          <PricingCards
+            annual={annual}
+            ctaTo="/auth/signup"
+            plans={plans.map((p) => ({
+              ...p,
+              credits:
+                p.name === "Starter" ? 2000 : p.name === "Pro" ? 12000 : null,
+            }))}
+          />
 
           {/* Trust line */}
           <div className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-muted-foreground">
